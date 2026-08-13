@@ -1,0 +1,25 @@
+@import 'tailwindcss';
+
+@layer utilities {
+  /* Custom horizontal scrollbar */
+  .custom-scrollbar::-webkit-scrollbar {
+    height: 3px; 
+    scroll-behavior: smooth;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent; 
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: transparent; /* Light gray color (Tailwind slate-300) */
+    border-radius: 9999px; 
+    padding-top: 10px;
+    transition: background 0.3s ease;
+  }
+
+  .custom-scrollbar:hover::-webkit-scrollbar-thumb:hover {
+    background: #b2b9c4; 
+    height: 2px;
+  }
+}
