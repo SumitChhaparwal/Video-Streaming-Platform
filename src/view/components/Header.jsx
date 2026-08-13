@@ -3,9 +3,16 @@ import { CgMenu } from "react-icons/cg";
 import { FiSearch } from "react-icons/fi";
 import { FiPlus } from "react-icons/fi";
 import { SiYoutubetv } from "react-icons/si";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { menuToggle } from "../utilities/homeSlice";
 
 const Header = () => {
-  const [menuChange, setMenuChange] = useState(true);
+   //default value = false..
+  const menuChange = useSelector(store => store.home.menuChange);
+
+  const dispatch = useDispatch();
+
   return (
     <>
       <header>
@@ -18,7 +25,7 @@ const Header = () => {
               >
                 <CgMenu
                   className="icon hover:bg-zinc-100"
-                  onClick={() => setMenuChange(!menuChange)}
+                  onClick={() => dispatch(menuToggle())}
                 />
               </a>
               <a href="#" className="logo w-30">
@@ -57,7 +64,7 @@ const Header = () => {
               >
                 <CgMenu
                   className="icon hover:bg-zinc-100"
-                  onClick={() => setMenuChange(!menuChange)}
+                  onClick={() => dispatch(menuToggle())}
                 />
               </a>
               <a href="#" className="logo w-30">

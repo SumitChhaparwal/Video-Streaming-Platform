@@ -10,13 +10,15 @@ import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { RiDownloadLine } from "react-icons/ri";
 import { MdSubscriptions } from "react-icons/md";
 import { MdAccountCircle } from "react-icons/md";
+import { useSelector } from "react-redux";
 
 const Sidebar = () => {
-  let menuChange = true;
+  //default value is false..
+  const menuChange = useSelector(store => store.home.menuChange);
   return (
     <>
       {menuChange ? (
-        <aside className="border-r border-gray-100 pr-1 w-48 max-sm:w-[40vw] pt-3 pb-2 bg-[#fffffffb] h-full fixed">
+        <aside className="border-r border-gray-100 pr-1 w-48 max-sm:w-[40vw] pt-3 pb-2 bg-[#fffffffb] h-full fixed 2xl:block xl:block lg:block max-md:hidden">
           <div className="top-sec border-b-2 pb-4 border-gray-200">
             <ul className="flex flex-col gap-4.5 px-4 text-md">
               <li>
@@ -162,7 +164,7 @@ const Sidebar = () => {
           </div>
         </aside>
       ) : (
-        <aside className="px-3 w-26 max-sm:w-[15%] py-4 fixed">
+        <aside className="px-3 w-26 max-sm:w-[15%] py-4 fixed mt-10 2xl:block xl:block lg:block max-md:hidden">
           <div className="top-sec pb-4">
             <ul className="flex flex-col gap-6 text-md">
               <li>
