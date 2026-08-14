@@ -3,7 +3,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 const VideoItem = ({ itemD }) => {
   return (
     <>
-      <div className="vidItem cursor-pointer 2xl:h-[45vh] xl:h-[40vh] lg:h-[35vh] [@media(width:1024px)_and_(height:1366px)]:h-[20vh] max-md:h-full xl:w-[32%] lg:w-[31.9%] md:w-[35.5vw] max-sm:w-full border">
+      <div className="vidItem cursor-pointer 2xl:h-[45vh] xl:h-[40vh] lg:h-[35vh] [@media(width:1024px)_and_(height:1366px)]:h-[20vh] max-md:h-full xl:w-[32%] lg:w-[31.9%] md:w-[35.5vw] max-sm:w-full hover:bg-zinc-100 hover:rounded-xl transition-all">
         <div className="thumb-sec relative">
           <img
             src={`${itemD.thumbnailUrl}`}
@@ -15,14 +15,14 @@ const VideoItem = ({ itemD }) => {
           </span>
         </div>
         <div className="next-sec w-full flex flex-row justify-between mt-2">
-          <div className="favicon basis-[14%] lg:basis-[13%] max-sm:basis-[10%] sm:basis-[6%] border">
+          <div className="favicon basis-[14%] lg:basis-[13%] max-sm:basis-[10%] sm:basis-[6%]">
             <img
               src={`${itemD.channelFavicon}`}
               className="w-10 h-10 rounded-4xl"
               alt="favicon_img"
             />
           </div>
-          <div className="info basis-[77%] lg:basis-[75%] max-sm:basis-[80%] border flex flex-col items-start gap-1 md:gap-0.5">
+          <div className="info basis-[77%] lg:basis-[75%] max-sm:basis-[80%] flex flex-col items-start gap-1 md:gap-0.5">
             {/* max-xl:px-1 max-lg:px-1 lg:px-1=n*/}
             <div className="title text-md font-medium text-gray-900 line-clamp-2 max-xl:text-sm flex-5">
               {itemD.title}
