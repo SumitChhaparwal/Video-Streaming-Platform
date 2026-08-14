@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { updateMenuOverlap } from "../utilities/homeSlice";
+import { useEffect } from "react";
 
 const MainBody = () => {
   //To overlap on small screen and if its false then not overlap on big screen -continue..
@@ -15,15 +16,22 @@ const MainBody = () => {
   const dispatch = useDispatch();
 
   //setting condition related to overlap..
-  function menuOverFun() {
-    let width = window.innerWidth;
-    if (width < 768) {
-      dispatch(updateMenuOverlap());
-    } else {
-      dispatch(updateMenuOverlap(false));
+ 
+    function menuOverFun() {
+      let width = window.innerWidth;
+      console.log("current width: ",width)
+      if (width < 830) {
+          console.log("MOBILE");
+        dispatch(updateMenuOverlap());
+      } else {
+        console.log("DESKTOP");
+        dispatch(updateMenuOverlap(false));
+      }
     }
-  }
-  menuOverFun();
+    //run only once
+    menuOverFun();
+    window.addEventListener("resize", menuOverFun); 
+
 
   return (
     <>
