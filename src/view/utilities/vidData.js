@@ -11,11 +11,12 @@ export const vidData = [
         "In this episode of The Code Report, we explore the current state of humanoid robotics. While demos from companies like Google and 1X suggest we are on the verge of a robot revolution, real-world robotics researchers at MIT suggest otherwise. We break down the challenges of physical-world interaction, the differences between LLMs and robotics policies, and the limitations of current training data and simulation methods.",
       channelId: "Fireship",
       uploader: "Fireship",
-      views: 631468,
-      likes: 17939,
+      views: "631K",
+      likes: "17.3K",
       dislikes: null,
       uploadDate: "2026-08-11",
-      category: "tech all",
+      ago: "10 days",
+      category: "tech newtoyou all",
       comments: [
         {
           commentId: "comment01",
@@ -38,10 +39,11 @@ export const vidData = [
         "The official trailer for Marvel Studios' 'Avengers: Doomsday,' hitting theaters on December 18, 2026. The footage hints at a massive, world-ending threat that forces the heroes to unite, featuring appearances by characters like Thor, Captain America, and others preparing for an impossible decision.",
       channelId: "Marvel Entertainment",
       uploader: "Marvel Entertainment",
-      views: 62764252,
-      likes: 2557308,
+      views: "60.3M",
+      likes: "2.5M",
       dislikes: null,
       uploadDate: "2026-07-20",
+      ago: "3 weeks",
       category: "movie trailer newtoyou all",
       comments: [
         {
@@ -65,10 +67,11 @@ export const vidData = [
         "A trailer for the 16th episode of 'People by WTF' featuring an in-depth conversation between Nikhil Kamath and Elon Musk. The discussion touches on Musk's public persona, his philosophical influences like Nietzsche and Schopenhauer, and his thoughts on power and identity.",
       channelId: "Nikhil Kamath",
       uploader: "Nikhil Kamath",
-      views: 1168674,
-      likes: 37028,
+      views: "1.16M",
+      likes: "32.7K",
       dislikes: null,
       uploadDate: "2025-11-30",
+      ago: "8 months",
       category: "podcast all",
       comments: [
         {
@@ -92,10 +95,11 @@ export const vidData = [
         "A high-energy, copyright-free track titled 'RUN IT UP' from the artist NEFFEX, released as part of their ongoing music series.",
       channelId: "NEFFEX",
       uploader: "NEFFEX",
-      views: 77000,
-      likes: 4563,
+      views: "77K",
+      likes: "4.5K",
       dislikes: null,
       uploadDate: "2026-08-05",
+      ago: "1 week",
       category: "song newtoyou all",
       comments: [
         {
@@ -119,10 +123,11 @@ export const vidData = [
         "A detailed breakdown of the massive security, logistics, and planning involved whenever the US President travels abroad. From the 'Beast' car and 'Air Force One' to specialized advance teams and strict protocol, this video covers how the world's most guarded individual operates globally.",
       channelId: "Nitish Rajput",
       uploader: "Nitish Rajput",
-      views: 6879353,
-      likes: 144114,
+      views: "6.8M",
+      likes: "144K",
       dislikes: null,
       uploadDate: "2025-11-30",
+      ago: "10 months",
       category: "podcast all",
       comments: [
         {
@@ -146,10 +151,11 @@ export const vidData = [
         "Google CEO Sundar Pichai and Emily Chang discuss Google's AI-first strategy, competition with Microsoft and OpenAI, and the future of search and Artificial General Intelligence (AGI).",
       channelId: "BloombergOriginals",
       uploader: "Bloomberg Originals",
-      views: 5897907,
-      likes: 75305,
+      views: "5.8M",
+      likes: "75.3K",
       dislikes: null,
       uploadDate: "2024-05-08",
+      ago: "1 years",
       category: "tech all",
       comments: [
         {
@@ -173,10 +179,11 @@ export const vidData = [
         "A motivational compilation about cultivating a champion's mindset, featuring insights on self-talk, dedication, discipline, and the refusal to give up, with examples from high-achieving athletes and figures.",
       channelId: "Be Invictus",
       uploader: "Be Invictus",
-      views: 164022,
-      likes: 2933,
+      views: "164K",
+      likes: "2.9K",
       dislikes: null,
       uploadDate: "2024-11-09",
+      ago: "8 months",
       category: "motivation all",
       comments: [
         {
@@ -201,10 +208,11 @@ export const vidData = [
         "Tucker Carlson interviews Telegram founder and CEO Pavel Durov discussing the origins of Telegram, privacy, government pressure, security, and his experiences traveling and living globally.",
       channelId: "Tucker Carlson",
       uploader: "Tucker Carlson",
-      views: 25000000,
-      likes: 850000,
+      views: "20.5M",
+      likes: "850K",
       dislikes: null,
       uploadDate: "2024-04-16",
+      ago: "1 year",
       category: "podcast all",
       comments: [
         {
@@ -228,11 +236,12 @@ export const vidData = [
         "An exploration of why embracing boredom and silence is essential for creativity, mental health, and productivity in a world of constant overstimulation.",
       channelId: "The Mindset Mentor Podcast",
       uploader: "The Mindset Mentor Podcast",
-      views: 16512,
-      likes: 808,
+      views: "16.5K",
+      likes: "808",
       dislikes: null,
       uploadDate: "2026-08-10",
-      category: "motivation all",
+      ago: "8 days",
+      category: "motivation newtoyou all",
       comments: [
         {
           commentId: "comment09",
@@ -255,11 +264,12 @@ export const vidData = [
         "Official trailer for Dune: Part Three, featuring intense conflicts, political intrigue, and the continuing saga of Paul Atreides as he faces new challenges and the weight of his actions.",
       channelId: "Warner Bros.",
       uploader: "Warner Bros.",
-      views: 34762621,
-      likes: 452151,
+      views: "30.4M",
+      likes: "452K",
       dislikes: null,
       uploadDate: "2026-07-08",
-      category: "movie trailer newtoyou all",
+      ago: "1 month",
+      category: "movie trailer all",
       comments: [
         {
           commentId: "comment09",
@@ -283,10 +293,11 @@ export const vidData = [
         "An in-depth case study by Think School on how Switzerland transformed from a desperately poor, landlocked, resource-deprived nation into one of the wealthiest countries in the world through infrastructure, clever policy, banking, and value-added manufacturing.",
       channelId: "Think School",
       uploader: "Think School",
-      views: 1030560,
-      likes: 29542,
+      views: "1.3M",
+      likes: "29.5K",
       dislikes: null,
       uploadDate: "2026-06-10",
+      ago: "2 months",
       category: "Podcast all",
       comments: [
         {

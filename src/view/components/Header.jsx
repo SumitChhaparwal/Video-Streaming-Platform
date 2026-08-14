@@ -4,15 +4,28 @@ import { FiSearch } from "react-icons/fi";
 import { FiPlus } from "react-icons/fi";
 import { SiYoutubetv } from "react-icons/si";
 import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
 import { menuToggle } from "../utilities/homeSlice";
+import { useDispatch } from "react-redux";
+import { searchFun } from "../utilities/homeSlice";
+import { vidData } from "../utilities/vidData";
 
 const Header = () => {
-   //default value = false..
-  const menuChange = useSelector(store => store.home.menuChange);
+  //default value = false..
+  const menuChange = useSelector((store) => store.home.menuChange);
 
   const dispatch = useDispatch();
-  
+
+  const [searchTerm, setSearchTerm] = useState("");
+
+  function disUpdate() {
+    dispatch(
+      searchFun({
+        sTerm: searchTerm,
+        arr: vidData,
+      }),
+    );
+  }
+
   return (
     <>
       <header>
@@ -41,8 +54,10 @@ const Header = () => {
                 type="text"
                 placeholder="Search"
                 className="border-r border-gray-200 bg-white rounded-tl-2xl rounded-bl-2xl h-full w-[80%] px-3.5"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
-              <div className="search-icon text-xl mx-auto bg-gray-50 h-full w-[19.9%] flex justify-center items-center rounded-tr-2xl rounded-br-2xl cursor-pointer text-gray-700">
+              <div className="search-icon text-xl mx-auto bg-gray-50 h-full w-[19.9%] flex justify-center items-center rounded-tr-2xl rounded-br-2xl cursor-pointer text-gray-700" onClick={disUpdate}>
                 <FiSearch />
               </div>
             </div>
@@ -79,9 +94,11 @@ const Header = () => {
               <input
                 type="text"
                 placeholder="Search"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
                 className="border-r border-gray-200 bg-white rounded-tl-2xl rounded-bl-2xl h-full w-[80%] px-3.5"
               />
-              <div className="search-icon text-xl mx-auto bg-gray-50 h-full w-[19.9%] flex justify-center items-center rounded-tr-2xl rounded-br-2xl cursor-pointer text-gray-700">
+              <div className="search-icon text-xl mx-auto bg-gray-50 h-full w-[19.9%] flex justify-center items-center rounded-tr-2xl rounded-br-2xl cursor-pointer text-gray-700" onClick={disUpdate}>
                 <FiSearch />
               </div>
             </div>
