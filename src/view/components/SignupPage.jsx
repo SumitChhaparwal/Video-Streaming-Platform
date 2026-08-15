@@ -17,6 +17,7 @@ const SignupPage = () => {
                   className="border border-[#ccc] w-full py-1.5 rounded-md px-2 mt-1"
                   id="name"
                   name="username"
+                  required
                 />
               </label>
             </div>
@@ -29,6 +30,7 @@ const SignupPage = () => {
                   className="border border-[#ccc] w-full py-1.5 rounded-md px-2 mt-1"
                   id="email"
                   name="user_email"
+                  required
                 />
               </label>
             </div>
@@ -41,6 +43,7 @@ const SignupPage = () => {
                   className="border border-[#ccc] w-full py-1.5 rounded-md px-2 mt-1"
                   id="passw"
                   name="user_pas"
+                  required
                 />
               </label>
             </div>
@@ -66,6 +69,7 @@ const SignupPage = () => {
                   className="border border-[#ccc] w-full py-1.5 rounded-md px-2 mt-1"
                   id="email"
                   name="user_email"
+                  required
                 />
               </label>
             </div>
@@ -78,6 +82,7 @@ const SignupPage = () => {
                   className="border border-[#ccc] w-full py-1.5 rounded-md px-2 mt-1"
                   id="passw"
                   name="user_pas"
+                  required
                 />
               </label>
             </div>

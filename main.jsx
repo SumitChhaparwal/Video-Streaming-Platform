@@ -3,8 +3,8 @@ import { createRoot } from "react-dom/client";
 import App from "./src/view/App.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import SignupPage from "./src/view/components/SignupPage.jsx";
-import MainBody from "./src/View/components/MainBody.jsx";
-import Sidebar from "./src/View/components/Sidebar.jsx";
+import MainBody from "./src/view/components/MainBody.jsx";
+import VideoPlayer from "./src/view/components/VideoPlayer.jsx";
 
 //To create browser routing configuration
 const appRouter = createBrowserRouter([
@@ -20,6 +20,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/signup",
         element: <SignupPage />,
+      },
+      {
+        path: "/videoplayer/:id",
+        element: <VideoPlayer />,
       },
     ],
   },

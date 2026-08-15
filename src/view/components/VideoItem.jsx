@@ -37,9 +37,9 @@ const VideoItem = ({ itemD }) => {
             </div>
           </div>
           <div className="moreIcon basis-[4%]">
-            <a href="#">
+            <div>
               <BsThreeDotsVertical className="text-md text-gray-900" />
-            </a>
+            </div>
           </div>
         </div>
       </div>
