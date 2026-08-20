@@ -1,4 +1,4 @@
-const VideoPlayer = ({ url }) => {
+const YoutubePlayer = ({ url }) => {
   let videoID = "";
   try {
     //getting V var value from "https://m.youtube.com/watch?v=fXBPo38gvFg&pp=ygUSQ2hhbXBpb24gTWVudGFsaXR5"
@@ -33,4 +33,4 @@ const VideoPlayer = ({ url }) => {
   );
 };
 
-export default VideoPlayer;
+export default YoutubePlayer;

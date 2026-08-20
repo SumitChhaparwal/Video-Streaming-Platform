@@ -6,11 +6,17 @@ import { FaCheckCircle } from "react-icons/fa";
 import YoutubePlayer from "./YoutubePlayer";
 import { useParams } from "react-router-dom";
 import { vidData } from "../utilities/vidData";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { LiaEdit } from "react-icons/lia";
+import { TiUserDeleteOutline } from "react-icons/ti";
 
 const VideoPlayer = () => {
   const { id } = useParams();
+
+  // const editRef = useRef(null);
+  const [apply, setApply] = useState("");
+
   //getting objData according url parameter id
   const filteredObj = vidData.find((item) => item.videoId == id);
   // console.log(filteredObj);
@@ -43,7 +49,7 @@ const VideoPlayer = () => {
       }
 
       const newObj = {
-        userId: 'userxyz2',
+        userId: `userxyz2-${Date.now()}-${Math.random().toString(36).substr(2, 4)}`,
         text: comment,
       };
 
@@ -60,6 +66,48 @@ const VideoPlayer = () => {
 
       setComment("");
     }
+  }
+
+  function handleFoucs(id) {
+    //dynamically target specific comment box
+    const targetElement = document.getElementById(`comment-${id}`);
+    targetElement.focus();
+  }
+
+  function handleEdit(event, id) {
+    if (event.key == "Enter") {
+      event.preventDefault();
+      const editedTxt = event.currentTarget.innerText.trim();
+      if (!editedTxt) {
+        return "Try again!";
+      }
+
+      //building updated comment list
+      const updatedComments = vidObj.comments.map((commentObj) =>
+        commentObj.userId == id
+          ? { ...commentObj, text: editedTxt }
+          : commentObj,
+      );
+
+      //updating current state
+      setVidObj((preVidObj) => ({
+        ...preVidObj,
+        comments: updatedComments,
+      }));
+
+      console.log("+++++", updatedComments);
+
+      event.currentTarget.blur();
+    }
+  }
+
+  function handleCDelete(id) {
+    const filteredComments = vidObj.comments.filter((obj) => obj.userId != id);
+    //updating current state
+    setVidObj((preVidObj) => ({
+      ...preVidObj,
+      comments: filteredComments,
+    }));
   }
 
   //recommendation vid filter
@@ -155,11 +203,29 @@ const VideoPlayer = () => {
                     <div className="profile w-8 h-8 bg-blue-500 flex items-center justify-center rounded-4xl text-md font-medium text-white">
                       {obj.userId.split("")[0].toUpperCase()}
                     </div>
-                    <div className="comment flex flex-col gap-0.5">
+                    <div className="comment flex flex-col gap-0.5 w-full">
                       <div className="userchannelName text-sm font-medium">
                         @{obj.userId.toLowerCase()}
                       </div>
-                      <div className="msg text-md">{obj.text}</div>
+                      <div className="msg text-md flex w-full justify-between items-center pr-2 cursor-pointer">
+                        <div
+                          className="txt pr-3"
+                          contentEditable
+                          suppressContentEditableWarning
+                          onKeyDown={(e) => handleEdit(e, obj.userId)}
+                          id={`comment-${obj.userId}`}
+                        >
+                          {obj.text}
+                        </div>
+                        <div className="edit flex gap-5">
+                          <div onClick={() => handleFoucs(obj.userId)}>
+                            <LiaEdit />
+                          </div>
+                          <div onClick={() => handleCDelete(obj.userId)}>
+                            <TiUserDeleteOutline />
+                          </div>
+                        </div>
+                      </div>
                       <div className="likeUnlike rounded-4xl w-24 flex flex-row gap-3 py-1.5">
                         <button className="flex items-center cursor-pointer">
                           <SlLike />{" "}
