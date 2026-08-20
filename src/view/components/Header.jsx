@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 import { searchFun } from "../utilities/homeSlice";
 import { vidData } from "../utilities/vidData";
 import { MdOutlineAccountCircle } from "react-icons/md";
-import { useParams, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const Header = () => {
@@ -63,7 +63,7 @@ const Header = () => {
                 />
               </Link>
             </div>
-            <div className="sec-2 flex border border-[#ccc] h-8 w-[40%] justify-center items-center rounded-2xl">
+            <div className="sec-2 flex border border-[#ccc] h-8 w-[40%] justify-center items-center rounded-2xl max-md:w-[30%] max-md:ml-2">
               <input
                 type="text"
                 placeholder="Search"
@@ -78,7 +78,7 @@ const Header = () => {
                 <FiSearch />
               </div>
             </div>
-            <div className="sec-3 flex gap-4 mx-3 lg:mx-6">
+            <div className="sec-3 flex gap-4 mx-3 lg:mx-6 max-md:gap-2">
               <div className="create flex items-center justify-center gap-1 w-18 h-8 rounded-2xl bg-gray-200 cursor-pointer">
                 <FiPlus /> <span className="font-medium text-xs">Create</span>
               </div>
@@ -89,7 +89,7 @@ const Header = () => {
                   </Link>
                 </div>
               ) : (
-                <div className="account bg-gray-200 text-blue-500 h-8 px-2 text-center rounded-2xl text-sm font-medium cursor-pointer flex justify-center items-center gap-1 hover:bg-blue-100">
+                <div className="account bg-gray-200 text-blue-500 h-8 px-2 max-md:px-1 text-center rounded-2xl text-sm max-md:text-xs font-medium cursor-pointer flex justify-center items-center gap-1 max-md:gap-0.5 hover:bg-blue-100">
                   <div className="text-lg">
                     <MdOutlineAccountCircle />
                   </div>
@@ -119,7 +119,7 @@ const Header = () => {
                 />
               </Link>
             </div>
-            <div className="sec-2 flex border border-[#ccc] h-8 w-[40%] justify-center items-center rounded-2xl">
+            <div className="sec-2 flex border border-[#ccc] h-8 w-[40%] justify-center items-center rounded-2xl max-md:w-[30%]">
               <input
                 type="text"
                 placeholder="Search"
@@ -134,8 +134,8 @@ const Header = () => {
                 <FiSearch />
               </div>
             </div>
-            <div className="sec-3 flex gap-4">
-              <div className="create flex items-center justify-center gap-1 w-18 h-8 rounded-2xl bg-gray-200 cursor-pointer hover:opacity-90">
+            <div className="sec-3 flex gap-4 max-md:mx-2 max-md:gap-2">
+              <div className="create flex items-center justify-center gap-1 max-md:gap-1 w-18 h-8 rounded-2xl bg-gray-200 cursor-pointer hover:opacity-90">
                 <FiPlus /> <span className="font-medium text-xs">Create</span>
               </div>
               {signIn ? (
@@ -146,7 +146,7 @@ const Header = () => {
                   </Link>
                 </div>
               ) : (
-                <div className="account bg-gray-200 text-blue-500 h-8 px-2 text-center rounded-2xl text-sm font-medium cursor-pointer flex justify-center items-center gap-1 hover:bg-blue-100">
+                <div className="account bg-gray-200 text-blue-500 h-8 px-2 text-center rounded-2xl text-sm max-md:text-xs max-md:px-1 font-medium cursor-pointer flex justify-center items-center gap-1 max-md:gap-0.5 hover:bg-blue-100">
                   <div className="text-lg">
                     <MdOutlineAccountCircle />
                   </div>

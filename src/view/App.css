@@ -23,3 +23,8 @@
     height: 2px;
   }
 }
+
+input:focus, 
+input:active {
+    outline: none !important;
+}
