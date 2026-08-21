@@ -37,7 +37,12 @@ const Header = () => {
   const changeB = urlLocation.pathname == "/" ? false : true;
 
   //In /signup page, menu is stopped..
-  const disablingMenuBtn = urlLocation.pathname == "/signup" ? true : false;
+  const disablingMenuBtn =
+    urlLocation.pathname == "/signup"
+      ? true
+      : urlLocation.pathname == "/createchannel"
+        ? true
+        : false;
 
   return (
     <>
@@ -80,7 +85,12 @@ const Header = () => {
             </div>
             <div className="sec-3 flex gap-4 mx-3 lg:mx-6 max-md:gap-2">
               <div className="create flex items-center justify-center gap-1 w-18 h-8 rounded-2xl bg-gray-200 cursor-pointer">
-                <FiPlus /> <span className="font-medium text-xs">Create</span>
+                <Link
+                  to={signIn ? `/createchannel` : `/signup`}
+                  className="contents"
+                >
+                  <FiPlus /> <span className="font-medium text-xs">Create</span>
+                </Link>
               </div>
               {signIn ? (
                 <div className="account bg-orange-600 w-8 h-8 text-center rounded-2xl text-xl text-white cursor-pointer hover:opacity-90">
@@ -105,7 +115,9 @@ const Header = () => {
             className={`top-0 left-0 fixed flex flex-row justify-between items-center bg-[#fffefef6] h-17 w-full lg:px-[2.4%] max-lg:px-[4%] md:px-[4%] sm:px-[3%] max-sm:px-[3%] z-50 ${changeB ? `border-b border-gray-200` : ``}`}
           >
             <div className="sec-1 flex items-center">
-              <div className={`menu-icon text-xl text-gray-700 mr-6 max-sm:mr-3  ${disablingMenuBtn ? `cursor-not-allowed` : `cursor-pointer`}`}>
+              <div
+                className={`menu-icon text-xl text-gray-700 mr-6 max-sm:mr-3  ${disablingMenuBtn ? `cursor-not-allowed` : `cursor-pointer`}`}
+              >
                 <CgMenu
                   className="icon hover:bg-zinc-100"
                   onClick={disablingMenuBtn ? `` : () => dispatch(menuToggle())}
@@ -136,7 +148,12 @@ const Header = () => {
             </div>
             <div className="sec-3 flex gap-4 max-md:mx-2 max-md:gap-2">
               <div className="create flex items-center justify-center gap-1 max-md:gap-1 w-18 h-8 rounded-2xl bg-gray-200 cursor-pointer hover:opacity-90">
-                <FiPlus /> <span className="font-medium text-xs">Create</span>
+                <Link
+                  to={signIn ? `/createchannel` : `/signup`}
+                  className="contents"
+                >
+                  <FiPlus /> <span className="font-medium text-xs">Create</span>
+                </Link>
               </div>
               {signIn ? (
                 <div className="account bg-orange-600 w-8 h-8 text-center rounded-2xl text-xl text-white cursor-pointer hover:opacity-90">
