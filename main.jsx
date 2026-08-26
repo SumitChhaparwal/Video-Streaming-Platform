@@ -8,12 +8,13 @@ import VideoPlayer from "./src/view/components/VideoPlayer.jsx";
 import CreateChannel from "./src/view/components/CreateChannel.jsx";
 import Channel from "./src/view/components/Channel.jsx";
 import Sidebar from "./src/view/components/Sidebar.jsx";
-
+import ErrorComp from "./src/view/components/ErrorComp.jsx";
 //To create browser routing configuration
 const appRouter = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <ErrorComp />,
     children: [
       {
         path: "/",
