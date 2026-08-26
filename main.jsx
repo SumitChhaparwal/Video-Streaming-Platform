@@ -5,6 +5,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import SignupPage from "./src/view/components/SignupPage.jsx";
 import MainBody from "./src/view/components/MainBody.jsx";
 import VideoPlayer from "./src/view/components/VideoPlayer.jsx";
+import CreateChannel from "./src/view/components/CreateChannel.jsx";
+import Channel from "./src/view/components/Channel.jsx";
+import Sidebar from "./src/view/components/Sidebar.jsx";
 
 //To create browser routing configuration
 const appRouter = createBrowserRouter([
@@ -23,7 +26,21 @@ const appRouter = createBrowserRouter([
       },
       {
         path: "/videoplayer/:id",
-        element: <VideoPlayer />,
+        element: <>
+        <Sidebar/>
+        <VideoPlayer />
+        </>,
+      },
+      {
+        path: "/createchannel",
+        element: <CreateChannel />,
+      },
+      {
+        path: "/channel",
+        element: <>
+        <Sidebar/>
+        <Channel />
+        </>,
       },
     ],
   },

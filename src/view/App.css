@@ -28,3 +28,8 @@ input:focus,
 input:active {
     outline: none !important;
 }
+
+button, nav, [role="button"] {
+  -webkit-user-select: none;
+  user-select: none;
+}
