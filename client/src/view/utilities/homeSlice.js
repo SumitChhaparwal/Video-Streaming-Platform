@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { act } from "react";
 import { vidData } from "./vidData";
 
 const homeSlice = createSlice({
