@@ -7,6 +7,7 @@ import { fileURLToPath } from "url";
 import cors from "cors";
 import { users } from "./models/app.model.js";
 import bcrypt from "bcrypt";
+import { channel } from "diagnostics_channel";
 
 // Setup __dirname for ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -62,7 +63,6 @@ const authenticateUser = (req, res, next) => {
 
 
 //**User Authentication**
-
 // creating RESTAPIs to SignUp using post method..
 app.post("/api/signup", async (req, res) => {
   const payload = req.body;
@@ -155,9 +155,18 @@ app.post("/api/auth/signin", authenticateUser, async (req, res) => {
   });
 });
 
-
-//
-
+//**Channel Management**
+//creating RESTAPI to create new channel..
+app.post("/api/auth/createnewchannel", (req, res) => {
+  const payloadD = req.body;
+  if(!payloadD){
+    return res.status(400).json({err: "Empty data sent!"});
+  }
+  const {name, handle} = payloadD;
+  if(!name || !handle){
+    return res.status(400).json({err: "Invalid data!"});
+  }
+});
 
 
 
