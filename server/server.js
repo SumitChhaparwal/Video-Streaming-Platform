@@ -63,7 +63,7 @@ const authenticateUser = (req, res, next) => {
 
 //**User Authentication**
 
-//creating RESTAPIs to SignUp using post method..
+// creating RESTAPIs to SignUp using post method..
 app.post("/api/signup", async (req, res) => {
   const payload = req.body;
   //checking payload data
@@ -124,8 +124,7 @@ app.post("/api/signup", async (req, res) => {
   res.send({ newToken: token });
 });
 
-
-//creating RESTAPIs to SignIn using post method..
+// creating RESTAPIs to SignIn using post method..
 app.post("/api/auth/signin", authenticateUser, async (req, res) => {
   const userData = req.body;
   if (!userData) {
@@ -155,6 +154,12 @@ app.post("/api/auth/signin", authenticateUser, async (req, res) => {
     msg: "You Sign In Successfully!",
   });
 });
+
+
+//
+
+
+
 
 
 app.listen(port, () => {
