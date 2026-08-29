@@ -31,13 +31,12 @@ const homeSlice = createSlice({
     searchFun: (state, action) => {
       state.bData = action.payload.arr;
       state.vData = state.bData.filter((obj) =>
-        obj.title
-          .toLowerCase()
-          .includes(action.payload.sTerm.toLowerCase()),
+        obj.title.toLowerCase().includes(action.payload.sTerm.toLowerCase()),
       );
     },
   },
 });
 
 export default homeSlice.reducer;
-export const { updateMenuOverlap, menuToggle, filterBtn, searchFun } = homeSlice.actions;
+export const { updateMenuOverlap, menuToggle, filterBtn, searchFun } =
+  homeSlice.actions;
