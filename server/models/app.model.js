@@ -1,6 +1,4 @@
-import { channel, subscribe } from "diagnostics_channel";
-import mongoose, { mongo } from "mongoose";
-import { type } from "os";
+import mongoose from "mongoose";
 
 mongoose.connect("mongodb://localhost:27017");
 
@@ -45,30 +43,27 @@ const channelSchema = mongoose.Schema({
   handle: {
     type: String,
     required: true,
-    unique: true,
   },
-  username: {
+  u_name: {
     type: String,
     required: true,
-    unique: true,
   },
   desc: {
     type: String,
-    required: true,
     default: "Welcome this channel, Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid odio consectetur voluptates ab. Laudantium eaque totam nemo voluptate facilis corrupti ipsa? Nobis, nemo adipisci reprehenderit excepturi itaque aliquam tempora sunt.",  
   },
   bannerImg: {
     type: String,
-    required: true,
     default: "https://yt3.googleusercontent.com/B5iaLfhJJ65Gh20ZsOaXJZ6eeKCoLzoU-rtFQcYncWSs_j5SFYi5p80kChpSnX6xO54to0q4EXo=w1707-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj",
   },
   subscribers: {
     type: String,
-    required: true,
     default: "21.1k",
   },
-  videos: [String],
-  default: [],
+  videos: {
+    type: [String],
+    default: [],
+  }
 });
 
 //creating channel model..
