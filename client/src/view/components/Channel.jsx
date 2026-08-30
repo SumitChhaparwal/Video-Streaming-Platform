@@ -84,32 +84,48 @@ const Channel = () => {
     setOpenDropDown(openDropdown === index ? null : index);
   }
 
+  const accessData = sessionStorage.getItem("currentCh");
+  const channelObj = accessData ? JSON.parse(accessData) : "";
+  const initialFavicon = channelObj ? channelObj.channelName.slice(0, 1) : "";
+
+
   return (
-    <div className="mt-18 md:max-w-[80vw] w-full mx-auto     max-sm:px-1">
+    <div className="mt-18 md:max-w-[80vw] w-full mx-auto max-sm:px-1">
       <div className="channel-banner w-full">
         <img
-          src="https://yt3.googleusercontent.com/B5iaLfhJJ65Gh20ZsOaXJZ6eeKCoLzoU-rtFQcYncWSs_j5SFYi5p80kChpSnX6xO54to0q4EXo=w1707-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj"
+          src={
+            channelObj
+              ? channelObj.bannerImg
+              : "https://yt3.googleusercontent.com/B5iaLfhJJ65Gh20ZsOaXJZ6eeKCoLzoU-rtFQcYncWSs_j5SFYi5p80kChpSnX6xO54to0q4EXo=w1707-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj"
+          }
           className="rounded-xl max-sm:rounded-md max-sm:w-full"
           alt="banner_img"
         />
       </div>
-      <div className="ch-about flex flex-row items-center gap-4.5 mt-5 max-sm:border max-sm:border-[#ccc] max-sm:py-3 max-sm:px-1 max-sm:rounded-md max-sm:mt-2">
+      <div className="ch-about flex flex-row items-center gap-6 max-sm:gap-4 mt-5 max-sm:border max-sm:border-[#ccc] max-sm:py-3 max-sm:px-1 max-sm:rounded-md max-sm:mt-2">
         <div className="sec-1">
-          <img
-            src="https://yt3.ggpht.com/3fPNbkf_xPyCleq77ZhcxyeorY97NtMHVNUbaAON_RBDH9ydL4hJkjxC8x_4mpuopkB8oI7Ct6Y=s68-c-k-c0x00ffffff-no-rj-mo"
-            alt="favicon_img"
-            className="w-50 xl:w-40 lg:w-50 md:w-60 sm:w-60 max-sm:w-80 rounded-full"
-          />
+          {channelObj ? (
+            <div className="bg-zinc-800 text-white w-24 h-24 max-sm:w-20 max-sm:h-20 flex justify-center items-center text-4xl rounded-full uppercase shadow-xl">
+              <span>{initialFavicon || "U"}</span>
+            </div>
+          ) : (
+            <img
+              src="https://yt3.ggpht.com/3fPNbkf_xPyCleq77ZhcxyeorY97NtMHVNUbaAON_RBDH9ydL4hJkjxC8x_4mpuopkB8oI7Ct6Y=s68-c-k-c0x00ffffff-no-rj-mo"
+              alt="favicon_img"
+              className="w-50 xl:w-40 lg:w-50 md:w-60 sm:w-60 max-sm:w-80 rounded-full"
+            />
+          )}
+          {/*  */}
         </div>
         <div className="sec-2 flex flex-col justify-start gap-2.5 max-sm:gap-1">
           <div className="name r-1 capitalize flex items-center gap-2 font-semibold">
-            <span className="text-3xl max-sm:text-2xl">Fireship</span>
+            <span className="text-3xl max-sm:text-2xl capitalize text-gray-900">{channelObj?.channelName || "Fireship"}</span>
             <span>
               <FaCheckCircle className="text-md" />
             </span>
           </div>
           <div className="sub r-2 flex gap-2 text-md">
-            <div className="tag font-semibold tracking-tight">@Fireship</div>
+            <div className="tag font-semibold tracking-tight text-gray-900 max-sm:w-20 overflow-x-clip line-clamp-2">@{channelObj?.handle || "fireship"}</div>
             <div className="sub tracking-tight text-gray-800">
               • 4.25 subscribers
             </div>
@@ -118,10 +134,7 @@ const Channel = () => {
             </div>
           </div>
           <div className="desc r-3 line-clamp-2 text-gray-800 w-full pr-20 max-sm:pr-0">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora
-            voluptate natus repellendus molestias rerum mollitia perferendis
-            laborum tempore, iste quidem fugit debitis quis corrupti quisquam
-            quibusdam suscipit eveniet, ex commodi.
+           {channelObj?.desc || "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam inventore dolore aspernatur similique repellat odit fugit aut necessitatibus veniam amet repudiandae, aperiam recusandae architecto sequi magni obcaecati tempora consequuntur! Quasi."}
           </div>
           <div className="btn r-4 max-sm:mt-1">
             <button className="rounded-3xl px-4 py-1.5  bg-gray-900 hover:bg-gray-800 text-white text-md cursor-pointer">
