@@ -5,9 +5,8 @@ import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
 import cors from "cors";
-import { users } from "./models/app.model.js";
+import { users, channelM } from "./models/app.model.js";
 import bcrypt from "bcrypt";
-import { channel } from "diagnostics_channel";
 
 // Setup __dirname for ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -36,6 +35,16 @@ const authenticateUser = (req, res, next) => {
   //accessing authentication header
   const authHeader = req.headers.authorization;
 
+  //check if authorization header exists
+  if (!authHeader) {
+    return res.status(401).json({ msg: "Authorization header is missing" });
+  }
+
+  //check if authorization header exists
+  if (!authHeader) {
+    return res.status(401).json({ msg: "Authorization header is missing" });
+  }
+
   //extracting token
   const userToken = authHeader.split(" ")[1];
 
@@ -60,7 +69,6 @@ const authenticateUser = (req, res, next) => {
     next();
   });
 };
-
 
 //**User Authentication**
 // creating RESTAPIs to SignUp using post method..
@@ -157,18 +165,27 @@ app.post("/api/auth/signin", authenticateUser, async (req, res) => {
 
 //**Channel Management**
 //creating RESTAPI to create new channel..
-app.post("/api/auth/createnewchannel", (req, res) => {
+app.post("/api/auth/createnewchannel", async (req, res) => {
   const payloadD = req.body;
-  if(!payloadD){
-    return res.status(400).json({err: "Empty data sent!"});
+  if (!payloadD) {
+    return res.status(400).json({ err: "Empty data sent!" });
   }
-  const {name, handle} = payloadD;
-  if(!name || !handle){
-    return res.status(400).json({err: "Invalid data!"});
+  const { channelN, handle, u_name } = payloadD;
+  if (!channelN || !handle || !u_name) {
+    return res.status(400).json({ err: "Invalid data!" });
+  }
+  try {
+    const dbObj = await channelM.create({
+      channelName: channelN.trim(),
+      handle: handle.trim(),
+      u_name: u_name.trim(),
+    });
+    return res.status(201).json(dbObj);
+  } catch (error) {
+    console.error("Failed to create channel:", error);
+    
   }
 });
-
-
 
 
 app.listen(port, () => {
