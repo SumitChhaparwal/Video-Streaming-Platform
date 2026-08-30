@@ -3,15 +3,17 @@ import { FaUser } from "react-icons/fa6";
 import { FaCircleCheck } from "react-icons/fa6";
 import { RiErrorWarningFill } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
+import axios, { create } from "axios";
 
 const CreateChannel = () => {
   const [name, setName] = useState("");
   const [handle, setHandle] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
   //input validation
   function checkHandlerFun() {
-    const pattern = new RegExp("^[a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*$");
+    const pattern = /^[a-zA-Z0-9]+([_\-][a-zA-Z0-9]+)*$/;
     if (name.trim() === handle.trim()) {
       return false;
     } else if (pattern.test(handle)) {
@@ -21,17 +23,60 @@ const CreateChannel = () => {
     }
   }
 
-  //validating form
-  function validate(event){
-    if(!name || !handle){
+  //createChannel Func()
+  async function createChannelFunc() {
+    const uInfoRaw = sessionStorage.getItem("uInfo");
+    const uObj = uInfoRaw ? JSON.parse(uInfoRaw) : null;
+    const uname = uObj?.username;
+    if (!uname) {
+      setErrorMessage("Please sign in before creating a channel.");
       return;
     }
-     event.preventDefault();
-    if(checkHandlerFun()){
+    const userT = sessionStorage.getItem("ust");
+    const userToken = userT ? JSON.parse(userT)?.newToken : "dummyxyz";
+    try {
+      const res = await axios.post(
+        "http://localhost:3200/api/auth/createnewchannel",
+        {
+          channelN: name,
+          handle,
+          u_name: uname,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        },
+      );
+      if (!res || !res.data) {
+        console.log("Something went wrong. Try again!");
+        return;
+      }
       setHandle("");
       setName("");
-      navigate("/channel");
-    } else{
+      setErrorMessage("");
+      sessionStorage.setItem("currentCh", JSON.stringify(res.data));
+      navigate("/channel", {replace: true});
+      console.log("++++++++++ ", res.data);
+    } catch (error) {
+      const message =
+        error?.response?.data?.err || "Unable to create channel. Try again.";
+      setErrorMessage(message);
+      console.error("Response error: ", message);
+    }
+  }
+
+  //validating form
+  function validate(e) {
+    e.preventDefault();
+    if (!name || !handle) {
+      return;
+    }
+    if (checkHandlerFun()) {
+      setHandle("");
+      setName("");
+      createChannelFunc();
+    } else {
       console.log("Invalid submission..");
     }
   }
@@ -39,7 +84,10 @@ const CreateChannel = () => {
   return (
     <>
       <div className="mt-16 min-h-[95vh] antialiased font-sans p-4 flex flex-col justify-center items-center bg-[#f9f9f9]">
-        <form className="contain w-full max-w-lg bg-white border border-gray-200 shadow-[0_4px_24px_rgba(0,0,0,0.04)] p-6 sm:p-10 rounded-3xl">
+        <form
+          className="contain w-full max-w-lg bg-white border border-gray-200 shadow-[0_4px_24px_rgba(0,0,0,0.04)] p-6 sm:p-10 rounded-3xl"
+          onSubmit={validate}
+        >
           <div className="title text-2xl font-medium tracking-tight">
             How you'll appear
           </div>
@@ -80,7 +128,7 @@ const CreateChannel = () => {
                 id="handle-name"
                 placeholder=" "
                 value={handle}
-                pattern="^[a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*$"
+                pattern="^[a-zA-Z0-9]+([_-][a-zA-Z0-9]+)*$"
                 onChange={(e) => setHandle(e.target.value)}
                 className={`peer block w-full rounded-xl border border-gray-300 bg-white px-4 pt-5.5 pb-1.5 text-md text-gray-900 placeholder-transparent transition-colors focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none`}
                 required
@@ -115,17 +163,19 @@ const CreateChannel = () => {
               Learn more
             </span>
           </div>
+          {errorMessage && (
+            <p className="mt-4 text-sm text-red-500" role="alert">
+              {errorMessage}
+            </p>
+          )}
           <div className="btn-sec flex justify-end gap-3 mt-6.5 mb-2">
             <div className="cancel font-medium text-[14px] px-3.5 py-1.5 rounded-2xl hover:bg-gray-100 tracking-wide cursor-pointer">
-              <Link to="/">
-               Cancel
-              </Link>
+              <Link to="/">Cancel</Link>
             </div>
             <div className="create-btn">
               <button
                 className={`bg-blue-600 text-white px-3.5 py-1.5 rounded-2xl hover:bg-blue-700 cursor-pointer font-medium text-[14px] tracking-wide transition-all`}
                 type="submit"
-                onClick={validate}
               >
                 Create Channel
               </button>
