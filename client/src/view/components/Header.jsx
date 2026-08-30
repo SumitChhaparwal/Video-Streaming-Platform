@@ -62,6 +62,9 @@ const Header = () => {
     window.location.reload();
   }
 
+  const accessData = sessionStorage.getItem("currentCh");
+  const channelObj = accessData ? JSON.parse(accessData) : "";
+
   return (
     <>
       <header>
@@ -116,7 +119,10 @@ const Header = () => {
                className="account bg-violet-600 w-8 h-8 flex justify-center items-center rounded-2xl text-md text-white cursor-pointer hover:opacity-90 uppercase"
                     onClick={profileToggleFunc}
                */}
-                  <div className="account bg-violet-600 w-8 h-8 flex justify-center items-center rounded-2xl text-md text-white cursor-pointer hover:opacity-90 uppercase" onClick={profileToggleFunc}>
+                  <div
+                    className="account bg-violet-600 w-8 h-8 flex justify-center items-center rounded-2xl text-md text-white cursor-pointer hover:opacity-90 uppercase"
+                    onClick={profileToggleFunc}
+                  >
                     {userInitial || "G"}
                   </div>
                   {profileToggle && (
@@ -148,12 +154,14 @@ const Header = () => {
                               <span>Create new account</span>
                             </Link>
                           </div>
-                          <div className="row flex items-center gap-2 cursor-pointer pl-3 py-1 hover:bg-gray-100 transition-colors rounded-md">
-                            <Link className="contents" to="/channel">
-                              <SiYoutubestudio className="text-gray-700" />
-                              <span>View your channel</span>
-                            </Link>
-                          </div>
+                          {channelObj && (
+                            <div className="row flex items-center gap-2 cursor-pointer pl-3 py-1 hover:bg-gray-100 transition-colors rounded-md">
+                              <Link className="contents" to="/channel">
+                                <SiYoutubestudio className="text-gray-700" />
+                                <span>View your channel</span>
+                              </Link>
+                            </div>
+                          )}
                           <div className="row flex items-center gap-2 cursor-pointer pl-3 py-1 hover:bg-gray-100 transition-colors rounded-md">
                             <TbWorld className="text-gray-700" />{" "}
                             <span>Location: India</span>
@@ -264,12 +272,14 @@ const Header = () => {
                               <span>Create new account</span>
                             </Link>
                           </div>
-                          <div className="row flex items-center gap-2 cursor-pointer pl-3 py-1 hover:bg-gray-100 transition-colors rounded-md">
-                            <Link className="contents" to="/channel">
-                              <SiYoutubestudio className="text-gray-700" />
-                              <span>View your channel</span>
-                            </Link>
-                          </div>
+                          {channelObj && (
+                            <div className="row flex items-center gap-2 cursor-pointer pl-3 py-1 hover:bg-gray-100 transition-colors rounded-md">
+                              <Link className="contents" to="/channel">
+                                <SiYoutubestudio className="text-gray-700" />
+                                <span>View your channel</span>
+                              </Link>
+                            </div>
+                          )}
                           <div className="row flex items-center gap-2 cursor-pointer pl-3 py-1 hover:bg-gray-100 transition-colors rounded-md">
                             <TbWorld className="text-gray-700" />{" "}
                             <span>Location: India</span>
