@@ -183,7 +183,10 @@ app.post("/api/auth/createnewchannel", async (req, res) => {
     return res.status(201).json(dbObj);
   } catch (error) {
     console.error("Failed to create channel:", error);
-    
+    if (error?.code === 11000) {
+      return res.status(409).json({ err: "That handle is already in use." });
+    }
+    return res.status(500).json({ err: "Unable to create channel. Try again." });
   }
 });
 
