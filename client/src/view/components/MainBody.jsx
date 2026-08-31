@@ -61,7 +61,7 @@ const MainBody = () => {
             <Sidebar />
           </div>
           <div className="main_c flex-1 px-3 pt-4">
-            <div className="fixed z-50 bg-[#fffefef6] w-[73vw] backdrop-blur-xl">
+            <div className="fixed z-50 bg-[#fffefef6] backdrop-blur-xl w-full">
               <FilterBtn />
             </div>
             <div className="pt-10 -z-50">

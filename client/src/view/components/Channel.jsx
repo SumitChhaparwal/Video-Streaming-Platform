@@ -8,11 +8,12 @@ import { FiCheck } from "react-icons/fi";
 import { IoImageOutline } from "react-icons/io5";
 import { useSelector, useDispatch } from "react-redux";
 import { getVidData } from "../utilities/getVidData";
+import axios from "axios";
 
 const Channel = () => {
   //for more menu..
   const [openDropdown, setOpenDropDown] = useState(null);
-  const [edit, setEdit] = useState(false);
+  const [edit, setEdit] = useState("");
 
   //to store stringy url data [binary to string converted data]
   const [prevUpload, setPrevUpload] = useState(null);
@@ -29,9 +30,7 @@ const Channel = () => {
 
   //only call when component mount or page reload..
   useEffect(() => {
-    if (vData.length === 0) {
-      getVidData(dispatch);
-    }
+    getVidData(dispatch);
   }, []);
 
   //for getting VideoDetails
@@ -48,13 +47,53 @@ const Channel = () => {
       title: titleRef.current.value,
       desc: descRef.current.value,
       imgUrl: prevUpload,
+      videoId: edit,
     });
   }
 
+  //In func(), making API request to perform upate in video
+  async function updateVidDetails() {
+    const titleRefVal = titleRef.current.value;
+    const descRefVal = descRef.current.value;
+    if (!titleRefVal || !descRefVal || !prevUpload || !edit) {
+      return;
+    }
+    try {
+      const response = await axios.put("http://localhost:3200/channel", {
+        title: titleRef.current.value,
+        desc: descRef.current.value,
+        imgUrl: prevUpload,
+        videoId: edit,
+      });
+
+      if (!response) {
+        console.log("Response failed. Try Again!");
+        return;
+      }
+      console.log("Updated Video: ", response);
+      window.location.reload();
+    } catch (err) {
+      console.log("Response Error: ", err);
+    }
+  }
+
   //func() to delete video
-  function deleteVid(id) {
-    const filteredData = channelVids.filter((obj) => obj.id !== id);
-    setVid(filteredData);
+  async function deleteVid(id) {
+    try {
+      const res = await axios.delete("http://localhost:3200/channel", {
+        data: {
+          videoId: id,
+        },
+      });
+      if (!res) {
+        console.log("Video is not delete..");
+        return;
+      }
+      console.log("Video successfully deleted! ", res.response?.data || res.message);
+      window.location.reload();
+    } catch (err) {
+      console.log("Response Error: ", err);
+    }
   }
 
   //check newFile
@@ -184,8 +223,8 @@ const Channel = () => {
                   <button
                     className="rounded-lg p-1.5 text-gray-400 hover:bg-blue-50 hover:text-blue-600 transition-colors cursor-pointer text-xl"
                     onClick={() => {
-                      displayVideoD();
-                      setEdit(false);
+                      updateVidDetails();
+                      setEdit("");
                     }}
                   >
                     <FiCheck />
@@ -273,7 +312,7 @@ const Channel = () => {
           const isOpen = openDropdown === index;
           return (
             <div
-              className="vid-item w-87 xl:w-83 h-70 lg:w-75 lg:h-70 max-lg:w-[70vw] max-lg:h-110 max-sm:w-[95vw] sm:h-120 [@media(max-width:772px)_and_(height:883px)]:h-[50vh] [@media(max-width:772px):h-[10vh] [@media(max-width:768px)_and_(height:1024px)]:h-[40vh] cursor-pointer"
+              className="vid-item w-87 xl:w-83 h-70 lg:w-75 lg:h-70 max-lg:w-[70vw] max-sm:w-[95vw] max-md:h-90 [@media(max-width:772px)_and_(height:883px)]:h-[50vh] [@media(max-width:768px)_and_(height:1024px)]:h-[40vh] cursor-pointer"
               key={item._id}
             >
               <div className="thumb-sec relative">
@@ -282,12 +321,11 @@ const Channel = () => {
                   onClick={() =>
                     window.scrollTo({ top: 0, behavior: "smooth" })
                   }
-                  
                 >
                   <img
                     src={`${item.thumbnailUrl}`}
                     alt="thumbnail_img"
-                    className="rounded-lg"
+                    className="rounded-lg max-h-[35vh] border"
                   />
                 </Link>
                 <span className="absolute bottom-2.5 right-2.5 bg-[#0a0a0a8a] text-white font-medium px-1.5 py-0.5 rounded-md">
@@ -326,7 +364,7 @@ const Channel = () => {
                             <li className="hover:bg-gray-100 hover:rounded-lg transition-all px-2">
                               <button
                                 className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded cursor-pointer"
-                                onClick={() => setEdit(true)}
+                                onClick={() => setEdit(item._id)}
                               >
                                 Edit
                               </button>
@@ -334,7 +372,7 @@ const Channel = () => {
                             <li className="hover:bg-red-100 transition-all rounded-lg px-2">
                               <button
                                 className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded cursor-pointer"
-                                onClick={() => deleteVid(item.id)}
+                                onClick={() => deleteVid(item.videoId)}
                               >
                                 Delete
                               </button>

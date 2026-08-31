@@ -33,7 +33,7 @@ const Sidebar = () => {
     <>
       {menuChange ? (
         <aside
-          className={`border-r border-gray-100 pr-1 w-48 max-sm:w-[40vw] pt-3 pb-2 bg-[#fffffffb] h-full fixed 2xl:block xl:block lg:block ${custFirstSidebar ? `mt-16` : ``} ${disablingSecSidebar && `-mt-2`}`}
+          className={`border-r border-gray-100 pr-1 w-48 max-sm:w-[40vw] pt-3 pb-2 bg-[#fffffffb] h-full fixed 2xl:block xl:block lg:block ${custFirstSidebar ? `mt-16` : ``} ${disablingSecSidebar && `-mt-2 z-10`}`}
         >
           <div className="top-sec border-b-2 pb-4 border-gray-200">
             <ul className="flex flex-col gap-4.5 px-4 text-md">
