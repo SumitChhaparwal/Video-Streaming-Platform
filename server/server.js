@@ -191,6 +191,11 @@ app.post("/api/auth/createnewchannel", async (req, res) => {
 });
 
 
+/*Video Management APIs*/
+//creating RESTAPI to fetch data from db
+
+
+
 app.listen(port, () => {
   console.log("server is running on port: 3200");
 });
