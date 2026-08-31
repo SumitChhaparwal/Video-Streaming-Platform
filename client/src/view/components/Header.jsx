@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 import { menuToggle } from "../utilities/homeSlice";
 import { useDispatch } from "react-redux";
 import { searchFun } from "../utilities/homeSlice";
-import { vidData } from "../utilities/vidData";
 import { MdOutlineAccountCircle } from "react-icons/md";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -36,7 +35,6 @@ const Header = () => {
     dispatch(
       searchFun({
         sTerm: searchTerm,
-        arr: vidData,
       }),
     );
   }

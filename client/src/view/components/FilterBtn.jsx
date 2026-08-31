@@ -1,10 +1,7 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { filterBtn } from "../utilities/homeSlice";
-import { vidData } from "../utilities/vidData";
 
 const FilterBtn = () => {
-  // const backUpData = useSelector((store) => store.home.vData);
-  const backUpData = vidData;
 
   const dispatch = useDispatch();
   return (
@@ -14,8 +11,7 @@ const FilterBtn = () => {
         onClick={() =>
           dispatch(
             filterBtn({
-              type: "all",
-              bArray: backUpData,
+              type: "all",  
             }),
           )
         }
@@ -28,7 +24,6 @@ const FilterBtn = () => {
           dispatch(
             filterBtn({
               type: "tech",
-              bArray: backUpData,
             }),
           )
         }
@@ -41,7 +36,6 @@ const FilterBtn = () => {
           dispatch(
             filterBtn({
               type: "motivation",
-              bArray: backUpData,
             }),
           )
         }
@@ -54,7 +48,6 @@ const FilterBtn = () => {
           dispatch(
             filterBtn({
               type: "song",
-              bArray: backUpData,
             }),
           )
         }
@@ -67,7 +60,6 @@ const FilterBtn = () => {
           dispatch(
             filterBtn({
               type: "trailer",
-              bArray: backUpData,
             }),
           )
         }
@@ -80,7 +72,6 @@ const FilterBtn = () => {
           dispatch(
             filterBtn({
               type: "podcast",
-              bArray: backUpData,
             }),
           )
         }
@@ -93,7 +84,6 @@ const FilterBtn = () => {
           dispatch(
             filterBtn({
               type: "newtoyou",
-              bArray: backUpData,
             }),
           )
         }

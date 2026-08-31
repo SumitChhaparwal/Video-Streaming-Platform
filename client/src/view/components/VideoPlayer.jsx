@@ -5,7 +5,6 @@ import { FaCircleUser } from "react-icons/fa6";
 import { FaCheckCircle } from "react-icons/fa";
 import YoutubePlayer from "./YoutubePlayer";
 import { useParams } from "react-router-dom";
-import { vidData } from "../utilities/vidData";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { LiaEdit } from "react-icons/lia";
@@ -16,11 +15,13 @@ import { useLocation, matchPath } from "react-router-dom";
 const VideoPlayer = () => {
   const { id } = useParams();
 
+  const vData = useSelector((store) => store.home.vData);
+
   // const editRef = useRef(null);
   const [apply, setApply] = useState("");
 
   //getting objData according url parameter id
-  const filteredObj = vidData.find((item) => item.videoId == id);
+  const filteredObj = vData.find((item) => item.videoId == id);
   // console.log(filteredObj);
 
   const [like, setLike] = useState(1);
@@ -113,21 +114,25 @@ const VideoPlayer = () => {
   }
 
   //recommendation vid filter
-  const filteredVidData = vidData.filter((item) => item.videoId != id);
+  const filteredVidData = vData.filter((item) => item.videoId != id);
 
-   const urlLocation = useLocation();
+  const urlLocation = useLocation();
 
-   const custFirstSidebar =
+  const custFirstSidebar =
     matchPath({ path: "/videoplayer/:id" }, urlLocation.pathname) !== null;
 
-  let menuChange = custFirstSidebar ? useSelector(store => store.home.menuChange) : false;
+  let menuChange = custFirstSidebar
+    ? useSelector((store) => store.home.menuChange)
+    : false;
 
   return (
     <>
       <div className="contain flex flex-row md:mb-10 max-md:flex-col max-md:mx-auto max-md:px-2">
         <div className="sec-1 flex flex-col gap-2 ml-2 max-md:ml-0 xl:w-[75vw] lg:w-[70vw] md:w-[70vw] max-sm:w-full mt-20">
-          <div className={`relative aspect-video overflow-hidden rounded-xl shadow-lg bg-black overflow-y-hidden ${menuChange ? `-z-10`: ``}`} >
-            <YoutubePlayer url={vidObj.videoLink}/>
+          <div
+            className={`relative aspect-video overflow-hidden rounded-xl shadow-lg bg-black overflow-y-hidden ${menuChange ? `-z-10` : ``}`}
+          >
+            <YoutubePlayer url={vidObj.videoLink} />
           </div>
           <div className="title text-lg lg:text-2xl lg:mt-1 md:text-xl font-medium line-clamp-2">
             {vidObj.title}
