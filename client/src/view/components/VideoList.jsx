@@ -1,37 +1,19 @@
 import VideoItem from "./VideoItem";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { storeData } from "../utilities/homeSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { getVidData } from "../utilities/getVidData";
 
 const VideoList = () => {
 
   const vData = useSelector(store => store.home.vData);
-
   const dispatch = useDispatch();
-
-  //func() made get api request through axios for videos data
-  async function getVidData() {
-    try{
-      const response = await axios.get("http://localhost:3200");
-      if(!response){
-        console.log("Try again!");
-        return;
-      }
-      console.log(response.data);
-      //dispatching storeData action to store fetched data inside global state..
-      dispatch(storeData(response.data));
-      //store data inside sessionStorage, which utilitze for filter and search
-      sessionStorage.setItem("videoD", JSON.stringify(response.data));   
-    } catch(err){
-      console.log("Response Error: ", err);
-    }
-  }
 
   //only call when component mount or page reload..
   useEffect(() => {
-    getVidData();
+    if(vData.length === 0) {
+      getVidData(dispatch);
+    };
   }, []);
 
 

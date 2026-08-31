@@ -2,10 +2,12 @@ import { FaCheckCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { IoSearchOutline } from "react-icons/io5";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { RxCross2 } from "react-icons/rx";
 import { FiCheck } from "react-icons/fi";
 import { IoImageOutline } from "react-icons/io5";
+import { useSelector, useDispatch } from "react-redux";
+import { getVidData } from "../utilities/getVidData";
 
 const Channel = () => {
   //for more menu..
@@ -15,17 +17,22 @@ const Channel = () => {
   //to store stringy url data [binary to string converted data]
   const [prevUpload, setPrevUpload] = useState(null);
 
-  //sample data
-  const videos = [
-    {
-      id: 1,
-      title: "I spent 3 days at MIT... the robot hype is worse than you think",
-    },
-    {
-      id: 2,
-      title: "I spent 3 days at MIT... the robot hype is worse than you think",
-    },
-  ];
+  //accessing global state
+  const vData = useSelector((store) => store.home.vData);
+
+  //channel specific videos
+  const channelVids = vData.slice(0, 5);
+
+  console.log(channelVids);
+
+  const dispatch = useDispatch();
+
+  //only call when component mount or page reload..
+  useEffect(() => {
+    if (vData.length === 0) {
+      getVidData(dispatch);
+    }
+  }, []);
 
   //for getting VideoDetails
   //1. for title
@@ -44,10 +51,9 @@ const Channel = () => {
     });
   }
 
-  const [vid, setVid] = useState(videos);
   //func() to delete video
   function deleteVid(id) {
-    const filteredData = videos.filter((obj) => obj.id !== id);
+    const filteredData = channelVids.filter((obj) => obj.id !== id);
     setVid(filteredData);
   }
 
@@ -88,7 +94,6 @@ const Channel = () => {
   const channelObj = accessData ? JSON.parse(accessData) : "";
   const initialFavicon = channelObj ? channelObj.channelName.slice(0, 1) : "";
 
-
   return (
     <div className="mt-18 md:max-w-[80vw] w-full mx-auto max-sm:px-1">
       <div className="channel-banner w-full">
@@ -105,7 +110,7 @@ const Channel = () => {
       <div className="ch-about flex flex-row items-center gap-6 max-sm:gap-4 mt-5 max-sm:border max-sm:border-[#ccc] max-sm:py-3 max-sm:px-1 max-sm:rounded-md max-sm:mt-2">
         <div className="sec-1">
           {channelObj ? (
-            <div className="bg-zinc-800 text-white w-24 h-24 max-sm:w-20 max-sm:h-20 flex justify-center items-center text-4xl rounded-full uppercase shadow-xl">
+            <div className="bg-violet-600 text-white w-24 h-24 max-sm:w-20 max-sm:h-20 flex justify-center items-center text-4xl rounded-full uppercase shadow-xl">
               <span>{initialFavicon || "U"}</span>
             </div>
           ) : (
@@ -119,22 +124,25 @@ const Channel = () => {
         </div>
         <div className="sec-2 flex flex-col justify-start gap-2.5 max-sm:gap-1">
           <div className="name r-1 capitalize flex items-center gap-2 font-semibold">
-            <span className="text-3xl max-sm:text-2xl capitalize text-gray-900">{channelObj?.channelName || "Fireship"}</span>
+            <span className="text-3xl max-sm:text-2xl capitalize text-gray-900">
+              {channelObj?.channelName || "Fireship"}
+            </span>
             <span>
               <FaCheckCircle className="text-md" />
             </span>
           </div>
           <div className="sub r-2 flex gap-2 text-md">
-            <div className="tag font-semibold tracking-tight text-gray-900 max-sm:w-20 overflow-x-clip line-clamp-2">@{channelObj?.handle || "fireship"}</div>
+            <div className="tag font-semibold tracking-tight text-gray-900 max-sm:w-20 overflow-x-clip line-clamp-2">
+              @{channelObj?.handle || "fireship"}
+            </div>
             <div className="sub tracking-tight text-gray-800">
-              • 4.25 subscribers
+              • {channelObj?.subscribers || "1k"} subscribers
             </div>
-            <div className="vids tracking-tight text-gray-800">
-              • 834 videos
-            </div>
+            <div className="vids tracking-tight text-gray-800">• 5 videos</div>
           </div>
           <div className="desc r-3 line-clamp-2 text-gray-800 w-full pr-20 max-sm:pr-0">
-           {channelObj?.desc || "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam inventore dolore aspernatur similique repellat odit fugit aut necessitatibus veniam amet repudiandae, aperiam recusandae architecto sequi magni obcaecati tempora consequuntur! Quasi."}
+            {channelObj?.desc ||
+              "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam inventore dolore aspernatur similique repellat odit fugit aut necessitatibus veniam amet repudiandae, aperiam recusandae architecto sequi magni obcaecati tempora consequuntur! Quasi."}
           </div>
           <div className="btn r-4 max-sm:mt-1">
             <button className="rounded-3xl px-4 py-1.5  bg-gray-900 hover:bg-gray-800 text-white text-md cursor-pointer">
@@ -261,23 +269,32 @@ const Channel = () => {
             </div>
           </div>
         )}
-        {vid.map((item, index) => {
+        {channelVids.map((item, index) => {
           const isOpen = openDropdown === index;
           return (
             <div
-              className="vid-item w-87 xl:w-83 h-70 lg:w-75 lg:h-70 max-lg:w-[70vw] max-lg:h-110 max-sm:w-[95vw] max-sm:h-80 sm:h-120 [@media(max-width:772px)_and_(height:883px)]:h-[50vh] [@media(max-width:772px):h-[10vh] [@media(max-width:768px)_and_(height:1024px)]:h-[40vh] cursor-pointer"
-              key={item.id}
+              className="vid-item w-87 xl:w-83 h-70 lg:w-75 lg:h-70 max-lg:w-[70vw] max-lg:h-110 max-sm:w-[95vw] sm:h-120 [@media(max-width:772px)_and_(height:883px)]:h-[50vh] [@media(max-width:772px):h-[10vh] [@media(max-width:768px)_and_(height:1024px)]:h-[40vh] cursor-pointer"
+              key={item._id}
             >
-              <div className="thumb-sec relative -z-10">
-                <img
-                  src="https://i.ytimg.com/vi/aB5LGrHISqY/hq720.jpg"
-                  alt="thumbnail_img"
-                  className="rounded-lg"
-                />
+              <div className="thumb-sec relative">
+                <Link
+                  to={`/videoplayer/${item.videoId}`}
+                  onClick={() =>
+                    window.scrollTo({ top: 0, behavior: "smooth" })
+                  }
+                  
+                >
+                  <img
+                    src={`${item.thumbnailUrl}`}
+                    alt="thumbnail_img"
+                    className="rounded-lg"
+                  />
+                </Link>
                 <span className="absolute bottom-2.5 right-2.5 bg-[#0a0a0a8a] text-white font-medium px-1.5 py-0.5 rounded-md">
-                  7:01
+                  {item.duration}
                 </span>
               </div>
+
               <div className="next-sec w-full flex flex-row mt-2">
                 <div className="favicon basis-15">
                   <img
@@ -330,12 +347,12 @@ const Channel = () => {
                   <div
                     className={`channelName text-sm font-medium text-gray-500 max-xl:text-sm`}
                   >
-                    Fireship
+                    {channelObj.channelName}
                   </div>
                   <div className="more flex gap-1 items-center text-sm font-medium text-gray-500 max-xl:text-sm">
-                    <div className="views">110k</div>
+                    <div className="views">{item.views}</div>
                     <div>•</div>
-                    <div className="ago">10 days ago</div>
+                    <div className="ago">{item.ago}</div>
                   </div>
                 </div>
                 {/* <div className="moreIcon basis-[4%]"></div> */}

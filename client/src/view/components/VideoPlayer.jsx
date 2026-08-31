@@ -9,16 +9,25 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { LiaEdit } from "react-icons/lia";
 import { TiUserDeleteOutline } from "react-icons/ti";
-import { useSelector } from "react-redux";
-import { useLocation, matchPath } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+// import { useLocation, matchPath } from "react-router-dom";
+import { getVidData } from "../utilities/getVidData";
 
 const VideoPlayer = () => {
   const { id } = useParams();
 
   const vData = useSelector((store) => store.home.vData);
 
+  const dispatch = useDispatch();
+
+  //only call when component mount or page reload..
+  useEffect(() => {
+    if (vData.length === 0) {
+      getVidData(dispatch);
+    }
+  }, [dispatch, vData.length]);
+
   // const editRef = useRef(null);
-  const [apply, setApply] = useState("");
 
   //getting objData according url parameter id
   const filteredObj = vData.find((item) => item.videoId == id);
@@ -40,7 +49,7 @@ const VideoPlayer = () => {
       setLike(1);
       setVidObj(filteredObj);
     }
-  }, [id]);
+  }, [id, filteredObj]);
 
   function addCommentFun(event) {
     // console.log(event);
@@ -116,14 +125,18 @@ const VideoPlayer = () => {
   //recommendation vid filter
   const filteredVidData = vData.filter((item) => item.videoId != id);
 
-  const urlLocation = useLocation();
+  // const urlLocation = useLocation();
 
-  const custFirstSidebar =
-    matchPath({ path: "/videoplayer/:id" }, urlLocation.pathname) !== null;
+  // const custFirstSidebar =
+  //   matchPath({ path: "/videoplayer/:id" }, urlLocation.pathname) !== null;
 
-  let menuChange = custFirstSidebar
-    ? useSelector((store) => store.home.menuChange)
-    : false;
+  const menuChange = useSelector((store) => store.home.menuChange);
+
+  if (!vidObj) {
+    return <div className="mt-20 p-4 text-center">Loading video...</div>;
+  }
+
+  console.log("---------------", filteredObj);
 
   return (
     <>
