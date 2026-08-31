@@ -7,6 +7,8 @@ import { fileURLToPath } from "url";
 import cors from "cors";
 import { users, channelM } from "./models/app.model.js";
 import bcrypt from "bcrypt";
+import { Video } from "./models/app.model.js";
+import { send } from "process";
 
 // Setup __dirname for ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -192,7 +194,17 @@ app.post("/api/auth/createnewchannel", async (req, res) => {
 
 
 /*Video Management APIs*/
-//creating RESTAPI to fetch data from db
+//creating RESTAPI to fetch data from database..
+app.get("/", async (req, res) => {
+  const videoArr = await Video.find({});
+  if(!videoArr){
+    return res.status(404).json({msg: "Something went wrong!"});
+  }
+  res.send(videoArr);
+});
+
+//creating RESTAPI to update video details
+
 
 
 
