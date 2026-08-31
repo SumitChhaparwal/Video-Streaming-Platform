@@ -8,7 +8,6 @@ import cors from "cors";
 import { users, channelM } from "./models/app.model.js";
 import bcrypt from "bcrypt";
 import { Video } from "./models/app.model.js";
-import { send } from "process";
 
 // Setup __dirname for ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -29,8 +28,8 @@ app.use(
   }),
 );
 
-//using built in middleware to access json
-app.use(express.json());
+//using built in middleware to access json, including uploaded image data URLs
+app.use(express.json({ limit: "10mb" }));
 
 //creating reusable authentication middleware func to verify token
 const authenticateUser = (req, res, next) => {
@@ -188,25 +187,79 @@ app.post("/api/auth/createnewchannel", async (req, res) => {
     if (error?.code === 11000) {
       return res.status(409).json({ err: "That handle is already in use." });
     }
-    return res.status(500).json({ err: "Unable to create channel. Try again." });
+    return res
+      .status(500)
+      .json({ err: "Unable to create channel. Try again." });
   }
 });
-
 
 /*Video Management APIs*/
 //creating RESTAPI to fetch data from database..
 app.get("/", async (req, res) => {
   const videoArr = await Video.find({});
-  if(!videoArr){
-    return res.status(404).json({msg: "Something went wrong!"});
+  if (!videoArr) {
+    return res.status(404).json({ msg: "Something went wrong!" });
   }
   res.send(videoArr);
 });
 
-//creating RESTAPI to update video details
+//creating RESTAPI to update video details..
+app.put("/channel", async (req, res) => {
+  try {
+    const payload = req.body;
 
+    if (!payload) {
+      return res.status(400).json({ msg: "Data is empty!" });
+    }
 
+    const { title, desc, imgUrl, videoId } = payload;
+    if (!title || !desc || !imgUrl || !videoId) {
+      return res.status(400).json({ msg: "Invalid data sent!" });
+    }
 
+    const updatedVidObj = await Video.findOneAndUpdate(
+      { _id: videoId },
+      {
+        $set: {
+          title,
+          description: desc,
+          thumbnailUrl: imgUrl,
+        },
+      },
+      {
+        new: true,
+        runValidators: true,
+      },
+    );
+    if (!updatedVidObj) {
+      return res.status(404).json({ msg: "Video not found!" });
+    }
+    res.status(201).json({
+      msg: "Successfully updated video details..",
+      updatedObj: updatedVidObj,
+    });
+  } catch (err) {
+    console.log("Something went wrong. Check server! ", err.message);
+  }
+});
+
+//creating RESTAPI to delete video..
+app.delete("/channel", async (req, res) => {
+  try {
+    const { videoId } = req.body;
+    if (!videoId) {
+      return res.status(400).json({ msg: "vidID Undefined.." });
+    }
+    const dbObj = await Video.deleteOne({ videoId });
+    if (dbObj.deleteCount === 0) {
+      return res.status(404).json({ msg: "Something went wrong!" });
+    }
+    res.status(200).json({ msg: "video deleted successfully.." });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ err: "Server error!" });
+  }
+});
 
 app.listen(port, () => {
   console.log("server is running on port: 3200");
