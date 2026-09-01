@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { vidData } from "./default.js";
 
+//conneting to mongodb through mongoose
 mongoose.connect("mongodb://localhost:27017");
 
 const db = mongoose.connection;
