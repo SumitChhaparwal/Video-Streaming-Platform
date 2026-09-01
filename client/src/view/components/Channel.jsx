@@ -41,15 +41,6 @@ const Channel = () => {
   //3. to store file obj data
   const [file, setFile] = useState(null);
 
-  //func() to display videoDetails
-  function displayVideoD() {
-    console.log({
-      title: titleRef.current.value,
-      desc: descRef.current.value,
-      imgUrl: prevUpload,
-      videoId: edit,
-    });
-  }
 
   //In func(), making API request to perform upate in video
   async function updateVidDetails() {
@@ -163,15 +154,15 @@ const Channel = () => {
         </div>
         <div className="sec-2 flex flex-col justify-start gap-2.5 max-sm:gap-1">
           <div className="name r-1 capitalize flex items-center gap-2 font-semibold">
-            <span className="text-3xl max-sm:text-2xl capitalize text-gray-900">
+            <span className="text-3xl max-sm:text-2xl capitalize text-gray-800">
               {channelObj?.channelName || "Fireship"}
             </span>
             <span>
-              <FaCheckCircle className="text-md" />
+              <FaCheckCircle className="text-md text-gray-800" />
             </span>
           </div>
           <div className="sub r-2 flex gap-2 text-md">
-            <div className="tag font-semibold tracking-tight text-gray-900 max-sm:w-20 overflow-x-clip line-clamp-2">
+            <div className="tag font-semibold tracking-tight text-gray-800 max-sm:w-20 overflow-x-clip line-clamp-2">
               @{channelObj?.handle || "fireship"}
             </div>
             <div className="sub tracking-tight text-gray-800">
@@ -184,7 +175,7 @@ const Channel = () => {
               "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam inventore dolore aspernatur similique repellat odit fugit aut necessitatibus veniam amet repudiandae, aperiam recusandae architecto sequi magni obcaecati tempora consequuntur! Quasi."}
           </div>
           <div className="btn r-4 max-sm:mt-1">
-            <button className="rounded-3xl px-4 py-1.5  bg-gray-900 hover:bg-gray-800 text-white text-md cursor-pointer">
+            <button className="rounded-3xl px-4 py-1.5  bg-gray-800 hover:bg-gray-900 text-white text-md cursor-pointer">
               Subscribe
             </button>
           </div>
