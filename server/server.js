@@ -7,7 +7,7 @@ import { fileURLToPath } from "url";
 import cors from "cors";
 import { users, channelM } from "./models/app.model.js";
 import bcrypt from "bcrypt";
-import { Video } from "./models/app.model.js";
+import { Video, Comments } from "./models/app.model.js";
 
 // Setup __dirname for ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -196,9 +196,12 @@ app.post("/api/auth/createnewchannel", async (req, res) => {
 /*Video Management APIs*/
 //creating RESTAPI to fetch data from database..
 app.get("/", async (req, res) => {
-  const videoArr = await Video.find({});
-  if (!videoArr) {
-    return res.status(404).json({ msg: "Something went wrong!" });
+  const videoArr = await Video.find({}).populate({
+    path: "comments",
+    options: { sort: { createdAt: -1 } },
+  });
+  if (!videoArr || videoArr.length === 0) {
+    return res.status(404).json({ msg: "No videos found!" });
   }
   res.send(videoArr);
 });
@@ -260,6 +263,73 @@ app.delete("/channel", async (req, res) => {
     return res.status(500).json({ err: "Server error!" });
   }
 });
+
+/*Comments APIs*/
+//creating RESTAPI to add new comments and fetch from vidObj..
+app.post("/videoplayer/:id/comments", async (req, res) => {
+  try {
+    const payloadD = req.body;
+    if (!payloadD) {
+      return res.status(400).json({ msg: "Empty data sent!" });
+    }
+    const { userId, text, videoId } = payloadD;
+    if (!userId || !text || !videoId) {
+      return res.status(400).json({ msg: "Invalid/Empty data sent!" });
+    }
+    const dbObj = await Comments.create({
+      userId,
+      text,
+      videoId,
+    });
+    if (!dbObj) {
+      return res
+        .status(404)
+        .json({ msg: "New document obj not found/created!" });
+    }
+    //updating videoObj comments array prop..
+    const vidObj = await Video.findOneAndUpdate(
+      { videoId },
+      {
+        $push: { comments: dbObj._id },
+      },
+      {
+        returnDocument: 'after'
+      },
+    );
+    if (!vidObj) {
+      return res
+        .status(404)
+        .json({ msg: "Video not found, Comment is not added!" });
+    }
+
+    res.status(201).json({
+      msg: "comment added successfully!",
+      dbObj,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ err: "Server Error!" });
+  }
+});
+
+//creating RESTAPI to delete comments..
+app.delete("/videoplayer/:id/comments", async (req, res) => {
+  try {
+    const { _id } = req.body;
+    if(!_id){
+      return res.status(400).json({msg: "Invalid Id sent!"});
+    }
+    const dbObj =  await Comments.deleteOne({_id});
+    if(!dbObj){
+      return res.status(404).json({msg: "Obj is not found!"});
+    }
+    res.status(200).json({msg: "Comment deleted successfully!"});
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ err: "Server Error!" });
+  }
+});
+
 
 app.listen(port, () => {
   console.log("server is running on port: 3200");

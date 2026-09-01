@@ -7,7 +7,7 @@ const db = mongoose.connection;
 //only run once when database connection successfully open..
 db.once("open", async () => {
   console.log("Successfully connected to the database..");
-  //run when db connection establish.. 
+  //run when db connection establish..
   await seedDatabase();
 });
 
@@ -75,20 +75,23 @@ const channelSchema = mongoose.Schema({
 export const channelM = mongoose.model("channel", channelSchema);
 
 //creating schema for comments
-const commentsSchema = mongoose.Schema({
-  userId: {
-    type: String,
-    required: true,
+const commentsSchema = mongoose.Schema(
+  {
+    userId: {
+      type: String,
+      required: true,
+    },
+    text: {
+      type: String,
+      required: true,
+    },
+    videoId: {
+      type: String,
+      required: true,
+    },
   },
-  text: {
-    type: String,
-    required: true,
-  },
-  videoId: {
-    type: String,
-    required: true,
-  },
-});
+  { timestamps: true }, //Automatically adds createdAt and updatedAt
+);
 //creating model for comments
 export const Comments = mongoose.model("Comments", commentsSchema);
 
