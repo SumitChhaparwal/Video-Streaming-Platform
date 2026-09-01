@@ -3,7 +3,7 @@ import { FaUser } from "react-icons/fa6";
 import { FaCircleCheck } from "react-icons/fa6";
 import { RiErrorWarningFill } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
-import axios, { create } from "axios";
+import axios from "axios";
 
 const CreateChannel = () => {
   const [name, setName] = useState("");
@@ -56,7 +56,7 @@ const CreateChannel = () => {
       setName("");
       setErrorMessage("");
       sessionStorage.setItem("currentCh", JSON.stringify(res.data));
-      navigate("/channel", {replace: true});
+      navigate("/channel", { replace: true });
       console.log("++++++++++ ", res.data);
     } catch (error) {
       const message =

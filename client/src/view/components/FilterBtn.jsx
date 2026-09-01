@@ -2,7 +2,6 @@ import { useDispatch } from "react-redux";
 import { filterBtn } from "../utilities/homeSlice";
 
 const FilterBtn = () => {
-
   const dispatch = useDispatch();
   return (
     <div className="w-full max-w-full min-w-0 flex gap-3 overflow-y-hidden overflow-x-auto custom-scrollbar pb-2 cursor-pointer">
@@ -11,7 +10,7 @@ const FilterBtn = () => {
         onClick={() =>
           dispatch(
             filterBtn({
-              type: "all",  
+              type: "all",
             }),
           )
         }

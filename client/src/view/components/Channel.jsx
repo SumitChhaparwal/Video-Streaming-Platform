@@ -24,8 +24,6 @@ const Channel = () => {
   //channel specific videos
   const channelVids = vData.slice(0, 5);
 
-  console.log(channelVids);
-
   const dispatch = useDispatch();
 
   //only call when component mount or page reload..
@@ -384,7 +382,6 @@ const Channel = () => {
                     <div className="ago">{item.ago}</div>
                   </div>
                 </div>
-                {/* <div className="moreIcon basis-[4%]"></div> */}
               </div>
             </div>
           );

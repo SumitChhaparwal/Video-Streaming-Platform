@@ -23,5 +23,5 @@ const ErrorComp = () => {
       </div>
     </div>
   );
-}
+};
 export default ErrorComp;

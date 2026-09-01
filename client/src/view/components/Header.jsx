@@ -2,7 +2,6 @@ import { useState } from "react";
 import { CgMenu } from "react-icons/cg";
 import { FiSearch } from "react-icons/fi";
 import { FiPlus } from "react-icons/fi";
-import { SiYoutubetv } from "react-icons/si";
 import { useSelector } from "react-redux";
 import { menuToggle } from "../utilities/homeSlice";
 import { useDispatch } from "react-redux";
@@ -23,7 +22,6 @@ const Header = () => {
   const userName = userAccount?.username ?? "";
   const userInitial = userName ? userName.slice(0, 1) : "";
   const signin = Boolean(userAccount && userAccount.username) ? true : false;
-  console.log("userAc------+ ", userAccount);
 
   //default value = false..
   const menuChange = useSelector((store) => store.home.menuChange);
@@ -113,10 +111,6 @@ const Header = () => {
               </div>
               {signin ? (
                 <>
-                  {/*
-               className="account bg-violet-600 w-8 h-8 flex justify-center items-center rounded-2xl text-md text-white cursor-pointer hover:opacity-90 uppercase"
-                    onClick={profileToggleFunc}
-               */}
                   <div
                     className="account bg-violet-600 w-8 h-8 flex justify-center items-center rounded-2xl text-md text-white cursor-pointer hover:opacity-90 uppercase"
                     onClick={profileToggleFunc}

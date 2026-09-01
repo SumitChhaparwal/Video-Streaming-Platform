@@ -10,7 +10,6 @@ import { Link } from "react-router-dom";
 import { LiaEdit } from "react-icons/lia";
 import { TiUserDeleteOutline } from "react-icons/ti";
 import { useSelector, useDispatch } from "react-redux";
-// import { useLocation, matchPath } from "react-router-dom";
 import { getVidData } from "../utilities/getVidData";
 import axios from "axios";
 
@@ -28,11 +27,8 @@ const VideoPlayer = () => {
     }
   }, [dispatch, vData.length]);
 
-  // const editRef = useRef(null);
-
   //getting objData according url parameter id
   const filteredObj = vData.find((item) => item.videoId == id);
-  // console.log(filteredObj);
 
   const [like, setLike] = useState(1);
 
@@ -41,9 +37,6 @@ const VideoPlayer = () => {
   // //Initialize comments state using obj.comments prop
   // const [comments, setComments] = useState(filteredObj.comments);
   const [vidObj, setVidObj] = useState(filteredObj);
-
-  console.log("vidObj:::", vidObj);
-
   const [comment, setComment] = useState("");
 
   //Update comments whenever video id changes
@@ -142,11 +135,6 @@ const VideoPlayer = () => {
 
   //recommendation vid filter
   const filteredVidData = vData.filter((item) => item.videoId != id);
-
-  // const urlLocation = useLocation();
-
-  // const custFirstSidebar =
-  //   matchPath({ path: "/videoplayer/:id" }, urlLocation.pathname) !== null;
 
   const menuChange = useSelector((store) => store.home.menuChange);
 

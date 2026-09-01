@@ -11,7 +11,6 @@ const homeSlice = createSlice({
   },
   reducers: {
     updateMenuOverlap: (state, action) => {
-      console.log(action.payload);
       if (action.payload === undefined) {
         state.menuOverlap = true;
         return;

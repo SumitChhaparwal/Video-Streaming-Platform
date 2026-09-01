@@ -23,11 +23,7 @@ const Sidebar = () => {
     matchPath({ path: "/videoplayer/:id" }, urlLocation.pathname) !== null;
 
   const disablingSecSidebar =
-    urlLocation.pathname == "/channel"
-      ? true
-      : custFirstSidebar
-        ? true
-        : false;
+    urlLocation.pathname == "/channel" ? true : custFirstSidebar ? true : false;
 
   return (
     <>

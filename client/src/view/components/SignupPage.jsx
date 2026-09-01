@@ -35,7 +35,6 @@ const SignupPage = () => {
         return;
       }
       sessionStorage.setItem("ust", JSON.stringify(response.data));
-      console.log(response);
       const t_Obj = JSON.parse(sessionStorage.getItem("ust"));
       if (!t_Obj.newToken) {
         alert("Retry this!");
@@ -49,14 +48,12 @@ const SignupPage = () => {
         setPopup(false);
       }, 3000);
       setToggle(false);
-      // navigate("/", { replace: true });
     } catch (error) {
       setDisplayErr(error?.response?.data.msg);
       setTimeout(() => {
         setDisplayErr("");
       }, 3000);
-      console.log("*******************", error.response.data.msg);
-      console.error("Response error: ", error);
+      console.error("Response error: ", error?.response?.data?.msg ?? error);
     }
   }
 
@@ -64,7 +61,7 @@ const SignupPage = () => {
   async function checkSignIn(e) {
     e.preventDefault();
     const userT = JSON.parse(sessionStorage.getItem("ust"));
-    const userToken = userT ? userT.newToken : 'dummyxyz';
+    const userToken = userT ? userT.newToken : "dummyxyz";
     try {
       const data = {
         email: emaill,
@@ -100,7 +97,6 @@ const SignupPage = () => {
         setPopup_(false);
         navigate("/", { replace: true });
       }, 3000);
-      console.log("Server Response:: ", res);
     } catch (error) {
       setDisplayE(error?.response?.data?.err ?? error?.response?.data?.msg);
       setTimeout(() => {
