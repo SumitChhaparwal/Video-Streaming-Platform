@@ -2,6 +2,7 @@ import { useState } from "react";
 import { CgMenu } from "react-icons/cg";
 import { FiSearch } from "react-icons/fi";
 import { FiPlus } from "react-icons/fi";
+import { SiYoutubetv } from "react-icons/si";
 import { useSelector } from "react-redux";
 import { menuToggle } from "../utilities/homeSlice";
 import { useDispatch } from "react-redux";
@@ -111,6 +112,10 @@ const Header = () => {
               </div>
               {signin ? (
                 <>
+                  {/*
+               className="account bg-violet-600 w-8 h-8 flex justify-center items-center rounded-2xl text-md text-white cursor-pointer hover:opacity-90 uppercase"
+                    onClick={profileToggleFunc}
+               */}
                   <div
                     className="account bg-violet-600 w-8 h-8 flex justify-center items-center rounded-2xl text-md text-white cursor-pointer hover:opacity-90 uppercase"
                     onClick={profileToggleFunc}
@@ -237,7 +242,7 @@ const Header = () => {
                   </div>
                   {profileToggle && (
                     <div className="fixed inset-0 p-4 w-full h-full z-1000">
-                      <div className="absolute right-2 top-18 w-full max-sm:w-60 max-w-xs bg-white border-2 border-gray-100 shadow-lg rounded-lg max-h-[95vh] overflow-y-auto outline-none px-3 pt-3 md:p-6 dark:bg-neutral-800 dark:border-neutral-70">
+                      <div className="absolute right-2 top-18 w-full max-sm:w-60 max-w-xs bg-white border-2 border-gray-100 shadow-lg rounded-lg max-h-[95vh] overflow-y-auto outline-none px-3 pt-3 md:p-6 dark:bg-neutral-800 dark:border-neutral-70 md:mt-6">
                         <span
                           className="absolute right-2 top-2 bg-gray-100 hover:bg-gray-200 rounded-sm cursor-pointer"
                           onClick={profileToggleFunc}

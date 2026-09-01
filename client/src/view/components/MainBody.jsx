@@ -16,7 +16,6 @@ const MainBody = () => {
   //setting condition related to overlap..
   function menuOverFun() {
     let width = window.innerWidth;
-    console.log("current width: ", width);
     if (width < 830) {
       console.log("MOBILE");
       dispatch(updateMenuOverlap());
