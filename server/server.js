@@ -79,13 +79,11 @@ app.post("/api/signup", async (req, res) => {
   if (!payload) {
     return res.status(400).json({ msg: "Form data is incomplete!" });
   }
-
   //checking props are undefined or not
   const { username, email, password } = payload;
   if (!username || !email || !password) {
     return res.status(400).json({ msg: "Invalid/Empty data is sent!" });
   }
-
   //performing form data validation
   if (username.length < 5) {
     return res.status(400).json({ msg: "Add at least 5 characters to Name!" });
@@ -93,7 +91,6 @@ app.post("/api/signup", async (req, res) => {
   if (password.length < 6) {
     return res.status(400).json({ msg: "Password length is too small!" });
   }
-
   //checking existing user by email mean that user is new or not
   const existingUserE = await users.findOne({ email });
   if (existingUserE) {
@@ -103,11 +100,9 @@ app.post("/api/signup", async (req, res) => {
   if (existingUserN) {
     return res.status(400).json({ msg: "Enter unique name!" });
   }
-
   //Performing secure password hashing through Bcrypt
   const saltRound = 11;
   const hashedPassword = await bcrypt.hash(password, saltRound);
-
   //storing data in backend..
   //creating document obj in users model
   const usersD = await users.create({
@@ -119,7 +114,6 @@ app.post("/api/signup", async (req, res) => {
   if (!usersD) {
     return res.status(401).json({ msg: "Invalid data is submitted!" });
   }
-
   //accesing .env var
   const secret_key = process.env.SECRET_KEY;
 
@@ -293,7 +287,7 @@ app.post("/videoplayer/:id/comments", async (req, res) => {
         $push: { comments: dbObj._id },
       },
       {
-        returnDocument: 'after'
+        returnDocument: "after",
       },
     );
     if (!vidObj) {
@@ -316,20 +310,19 @@ app.post("/videoplayer/:id/comments", async (req, res) => {
 app.delete("/videoplayer/:id/comments", async (req, res) => {
   try {
     const { _id } = req.body;
-    if(!_id){
-      return res.status(400).json({msg: "Invalid Id sent!"});
+    if (!_id) {
+      return res.status(400).json({ msg: "Invalid Id sent!" });
     }
-    const dbObj =  await Comments.deleteOne({_id});
-    if(!dbObj){
-      return res.status(404).json({msg: "Obj is not found!"});
+    const dbObj = await Comments.deleteOne({ _id });
+    if (!dbObj) {
+      return res.status(404).json({ msg: "Obj is not found!" });
     }
-    res.status(200).json({msg: "Comment deleted successfully!"});
+    res.status(200).json({ msg: "Comment deleted successfully!" });
   } catch (err) {
     console.log(err);
     res.status(500).json({ err: "Server Error!" });
   }
 });
-
 
 app.listen(port, () => {
   console.log("server is running on port: 3200");

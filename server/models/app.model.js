@@ -15,6 +15,7 @@ db.on("error", () => {
   console.log("Failed to connect the database..");
 });
 
+
 const usersSchema = mongoose.Schema({
   username: {
     type: String,
@@ -36,6 +37,7 @@ const usersSchema = mongoose.Schema({
 });
 //users model
 export const users = mongoose.model("users", usersSchema);
+
 
 //creating schema for channel
 const channelSchema = mongoose.Schema({
@@ -70,9 +72,9 @@ const channelSchema = mongoose.Schema({
     default: [],
   },
 });
-
 //creating channel model..
 export const channelM = mongoose.model("channel", channelSchema);
+
 
 //creating schema for comments
 const commentsSchema = mongoose.Schema(
@@ -94,6 +96,7 @@ const commentsSchema = mongoose.Schema(
 );
 //creating model for comments
 export const Comments = mongoose.model("Comments", commentsSchema);
+
 
 //creating schema for video
 const videoSchema = mongoose.Schema({
@@ -164,6 +167,7 @@ const videoSchema = mongoose.Schema({
 });
 //creating video model
 export const Video = mongoose.model("Video", videoSchema);
+
 
 //seedDb func() to store multi vid objs data in Video Collection
 const seedDatabase = async () => {
