@@ -119,20 +119,21 @@ const Channel = () => {
   }
 
   const accessData = sessionStorage.getItem("currentCh");
-  const channelObj = accessData ? JSON.parse(accessData) : "";
-  const initialFavicon = channelObj ? channelObj.channelName.slice(0, 1) : "";
+  const channelObj = accessData ? JSON.parse(accessData) : null;
+  const initialFavicon = channelObj?.channelName?.slice(0, 1) ?? "";
+
+  const defaultBannerImg = "https://yt3.googleusercontent.com/B5iaLfhJJ65Gh20ZsOaXJZ6eeKCoLzoU-rtFQcYncWSs_j5SFYi5p80kChpSnX6xO54to0q4EXo=w1707-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj";
 
   return (
     <div className="mt-18 md:max-w-[80vw] w-full mx-auto max-sm:px-1">
-      <div className="channel-banner w-full">
+      <div className="channel-banner w-full bg-gray-200">
         <img
-          src={
-            channelObj
-              ? channelObj.bannerImg
-              : "https://yt3.googleusercontent.com/B5iaLfhJJ65Gh20ZsOaXJZ6eeKCoLzoU-rtFQcYncWSs_j5SFYi5p80kChpSnX6xO54to0q4EXo=w1707-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj"
-          }
-          className="rounded-xl max-sm:rounded-md max-sm:w-full"
+          src={channelObj?.bannerImg ?? defaultBannerImg}
+          className="rounded-xl max-sm:rounded-md max-sm:w-full w-full h-auto"
           alt="banner_img"
+          onError={(e) => {
+            e.target.src = defaultBannerImg;
+          }}
         />
       </div>
       <div className="ch-about flex flex-row items-center gap-6 max-sm:gap-4 mt-5 max-sm:border max-sm:border-[#ccc] max-sm:py-3 max-sm:px-1 max-sm:rounded-md max-sm:mt-2">
@@ -312,7 +313,7 @@ const Channel = () => {
                   }
                 >
                   <img
-                    src={`${item.thumbnailUrl}`}
+                    src={`${item?.thumbnailUrl}`}
                     alt="thumbnail_img"
                     className="rounded-lg max-h-[35vh] border"
                   />
