@@ -59,6 +59,7 @@ cd Youtube_Clone_App && cd client && > npm run dev
 ```
 ### 3. For Database Connection
 ```
+# If needed
 mongoose.connect("---update mongoDB local connection url-----");
 ```
 
