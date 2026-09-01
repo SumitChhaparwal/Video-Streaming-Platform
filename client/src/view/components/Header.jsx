@@ -17,6 +17,7 @@ import { IoMdClose } from "react-icons/io";
 import { MdAccountCircle } from "react-icons/md";
 
 const Header = () => {
+  const [channelObj, setChannelObj] = useState(true);
   const [profileToggle, setProfileToggle] = useState(false);
   const userAccount = JSON.parse(sessionStorage.getItem("uInfo"));
   const userName = userAccount?.username ?? "";
@@ -52,6 +53,8 @@ const Header = () => {
         : false;
 
   function profileToggleFunc() {
+    const accessData = sessionStorage.getItem("currentCh");
+    accessData ? setChannelObj(true) : setChannelObj(false);
     setProfileToggle(!profileToggle);
   }
 
@@ -59,9 +62,6 @@ const Header = () => {
     sessionStorage.removeItem("uInfo");
     window.location.reload();
   }
-
-  const accessData = sessionStorage.getItem("currentCh");
-  const channelObj = accessData ? JSON.parse(accessData) : "";
 
   return (
     <>
