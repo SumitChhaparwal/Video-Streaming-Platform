@@ -12,6 +12,7 @@ import { TiUserDeleteOutline } from "react-icons/ti";
 import { useSelector, useDispatch } from "react-redux";
 // import { useLocation, matchPath } from "react-router-dom";
 import { getVidData } from "../utilities/getVidData";
+import axios from "axios";
 
 const VideoPlayer = () => {
   const { id } = useParams();
@@ -35,11 +36,13 @@ const VideoPlayer = () => {
 
   const [like, setLike] = useState(1);
 
+  function likeFunc() {}
+
   // //Initialize comments state using obj.comments prop
   // const [comments, setComments] = useState(filteredObj.comments);
   const [vidObj, setVidObj] = useState(filteredObj);
 
-  // console.log("vidObj:::", vidObj);
+  console.log("vidObj:::", vidObj);
 
   const [comment, setComment] = useState("");
 
@@ -51,32 +54,37 @@ const VideoPlayer = () => {
     }
   }, [id, filteredObj]);
 
-  function addCommentFun(event) {
-    // console.log(event);
+  //making api request to add new comment!
+  async function addCommentFun(event) {
     if (event.key === "Enter") {
       event.preventDefault();
-
       if (!comment.trim()) {
         return;
       }
+      //accessing user account id or if undefined then applying default value..
+      const userAccount = JSON.parse(sessionStorage.getItem("uInfo"));
+      const userAcId = userAccount
+        ? userAccount.email
+        : `userxyz2-${Date.now()}-${Math.random().toString(36).substr(2, 4)}`;
 
-      const newObj = {
-        userId: `userxyz2-${Date.now()}-${Math.random().toString(36).substr(2, 4)}`,
-        text: comment,
-      };
-
-      setVidObj((preVidObj) => ({
-        ...preVidObj,
-        comments: [newObj, ...preVidObj.comments],
-      }));
-
-      // setComments([newObj, ...comments]);
-
-      //updating dataset..
-      // filteredObj.comments.unshift(newObj);
-      // console.log("-----------", filteredObj);
-
-      setComment("");
+      try {
+        const res = await axios.post(
+          `http://localhost:3200/videoplayer/${filteredObj.videoId}/comments`,
+          {
+            userId: userAcId,
+            text: comment,
+            videoId: filteredObj?.videoId,
+          },
+        );
+        if (!res) {
+          console.log("failed to add new comment in DB!");
+        }
+        console.log("Added new comment successfully..");
+        setComment("");
+        window.location.reload();
+      } catch (err) {
+        console.log("Response Error: ", err.response);
+      }
     }
   }
 
@@ -106,20 +114,30 @@ const VideoPlayer = () => {
         ...preVidObj,
         comments: updatedComments,
       }));
-
-      console.log("+++++", updatedComments);
-
       event.currentTarget.blur();
     }
   }
 
-  function handleCDelete(id) {
-    const filteredComments = vidObj.comments.filter((obj) => obj.userId != id);
-    //updating current state
-    setVidObj((preVidObj) => ({
-      ...preVidObj,
-      comments: filteredComments,
-    }));
+  //making API request to delete comment from db..
+  async function handleCDelete(id, vidId) {
+    try {
+      const res = await axios.delete(
+        `http://localhost:3200/videoplayer/${vidId}/comments`,
+        {
+          data: {
+            _id: id,
+          },
+        },
+      );
+      if (!res) {
+        console.log("Video Id is undefined!");
+        return;
+      }
+      console.log("comment deleted successfully..");
+      window.location.reload();
+    } catch (err) {
+      console.log("Check Response Err: ", err?.response ?? err.message);
+    }
   }
 
   //recommendation vid filter
@@ -135,8 +153,6 @@ const VideoPlayer = () => {
   if (!vidObj) {
     return <div className="mt-20 p-4 text-center">Loading video...</div>;
   }
-
-  console.log("---------------", filteredObj);
 
   return (
     <>
@@ -226,29 +242,31 @@ const VideoPlayer = () => {
             <div className="sec-3 comm mt-5 flex-col">
               {vidObj.comments.map((obj) => {
                 return (
-                  <div className="users flex gap-2 mb-3" key={obj.userId}>
+                  <div className="users flex gap-2 mb-3" key={obj._id}>
                     <div className="profile w-8 h-8 bg-blue-500 flex items-center justify-center rounded-4xl text-md font-medium text-white">
-                      {obj.userId.split("")[0].toUpperCase()}
+                      {obj.userId?.split("")[0].toUpperCase()}
                     </div>
                     <div className="comment flex flex-col gap-0.5 w-full">
                       <div className="userchannelName text-sm font-medium">
-                        @{obj.userId.toLowerCase()}
+                        {obj.userId?.toLowerCase()}
                       </div>
                       <div className="msg text-md flex w-full justify-between items-center pr-2 cursor-pointer">
                         <div
                           className="txt pr-3"
                           contentEditable
                           suppressContentEditableWarning
-                          onKeyDown={(e) => handleEdit(e, obj.userId)}
-                          id={`comment-${obj.userId}`}
+                          onKeyDown={(e) => handleEdit(e, obj._id)}
+                          id={`comment-${obj._id}`}
                         >
                           {obj.text}
                         </div>
                         <div className="edit flex gap-5">
-                          <div onClick={() => handleFoucs(obj.userId)}>
+                          <div onClick={() => handleFoucs(obj._id)}>
                             <LiaEdit />
                           </div>
-                          <div onClick={() => handleCDelete(obj.userId)}>
+                          <div
+                            onClick={() => handleCDelete(obj._id, obj.videoId)}
+                          >
                             <TiUserDeleteOutline />
                           </div>
                         </div>
